@@ -1,4 +1,4 @@
-const { Client, Connection } = require("pg");
+const { Client } = require("pg");
 let client;
 
 exports.pgConnect = () => {

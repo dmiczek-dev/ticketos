@@ -6,12 +6,9 @@ exports.login = (req, res) => {
   const username = req.body.username;
   const password = req.body.password;
 
-  //TODO: Hash password
+  //TODO Optional: Hash password
   pgClient
-    .query("SELECT * FROM users WHERE username = $1 and password = $2", [
-      username,
-      password,
-    ])
+    .query("SELECT * FROM users WHERE username = $1 and password = $2", [username, password])
     .then((result) => {
       if (result.rows.length === 0) {
         res.status(401).send({

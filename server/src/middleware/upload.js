@@ -1,5 +1,5 @@
-const util = require(util);
-const multer = require(multer);
+const util = require("util");
+const multer = require("multer");
 const maxSize = 5 * 1024 * 1024; // 5MB
 
 let storage = multer.diskStorage({
@@ -7,11 +7,7 @@ let storage = multer.diskStorage({
     cb(null, __basedir + "/public/uploads/");
   },
   filename: (req, file, cb) => {
-    let today = new Date()
-      .toISOString()
-      .replace(/T/, "")
-      .replace(/\..+/, "")
-      .replace(/-|:/g, "");
+    let today = new Date().toISOString().replace(/T/, "").replace(/\..+/, "").replace(/-|:/g, "");
     cb(null, `${today}_${file.originalname}`);
   },
 });

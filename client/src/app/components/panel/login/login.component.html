@@ -1,0 +1,35 @@
+<div class="container">
+  <mat-card>
+    <img
+      mat-card-sm-image
+      src="../../../../assets/images/ticketos_logo.png"
+      alt="Photo of a Shiba Inu"
+    />
+    <mat-card-content>
+      <form (ngSubmit)="onSubmit()" autocomplete="off">
+        <h2>Panel kontrolny TicketOS</h2>
+        <mat-form-field appearance="outline" class="full-width-input">
+          <mat-label>Nazwa użytkownika</mat-label>
+          <input
+            [(ngModel)]="user.username"
+            name="username"
+            matInput
+            required
+          />
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="full-width-input">
+          <mat-label>Hasło</mat-label>
+          <input
+            [(ngModel)]="user.password"
+            name="password"
+            matInput
+            type="password"
+            required
+          />
+          <mat-hint *ngIf="showError">Nieprawidłowe dane logowania</mat-hint>
+        </mat-form-field>
+        <button mat-raised-button color="primary">Zaloguj się</button>
+      </form>
+    </mat-card-content>
+  </mat-card>
+</div>

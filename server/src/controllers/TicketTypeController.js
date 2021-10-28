@@ -1,5 +1,7 @@
 const { dbClient } = require("../db/postgres");
 
+//TODO: CRUD and more for ticket types
+
 exports.getOffices = (req, res) => {
   const pgClient = dbClient();
 

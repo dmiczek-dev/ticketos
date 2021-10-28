@@ -1,13 +1,13 @@
 const dotenv = require("dotenv");
 const express = require("express");
 const logger = require("morgan");
-const { pgConnect } = require("./postgres/config");
+const { pgConnect } = require("./src/db/postgres");
 
 const authRoutes = require("./src/routes/auth");
-const fileRoutes = require("./src/routes/file");
 const centerRoutes = require("./src/routes/center");
 const officeRoutes = require("./src/routes/office");
 const ticketTypeRoutes = require("./src/routes/ticket-type");
+const userRoutes = require("./src/routes/user");
 
 dotenv.config();
 const app = express();
@@ -19,10 +19,10 @@ app.use(logger("dev"));
 app.use(express.json());
 
 app.use("/api/auth", authRoutes);
-app.use("/api/files", fileRoutes);
 app.use("/api/centers", centerRoutes);
 app.use("/api/offices", officeRoutes);
 app.use("/api/ticket-types", ticketTypeRoutes);
+app.use("/api/users", userRoutes);
 
 const server = app.listen(process.env.PORT, () => {
   console.log("Server is up!");

@@ -23,3 +23,7 @@ exports.pgConnect = () => {
     }
   });
 };
+
+exports.getClient = () => {
+  return client;
+};

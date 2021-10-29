@@ -1,0 +1,35 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+mat-drawer {
+  width: 300px;
+}
+
+mat-drawer-container {
+  height: 100%;
+}
+
+mat-drawer-content {
+  padding: 20px;
+}
+
+@media print {
+  mat-drawer {
+    display: none;
+  }
+
+  .mat-drawer-content {
+    margin-left: 0px !important;
+  }
+
+  app-header {
+    display: none;
+  }
+
+  app-footer {
+    display: none;
+  }
+}

@@ -1,0 +1,21 @@
+:host {
+  .mat-icon {
+    vertical-align: middle;
+    margin-right: 20px;
+    color: var(--secondary-color);
+  }
+  .profile-card {
+    text-align: center;
+    padding: 20px 20px 20px 20px;
+  }
+}
+
+.live {
+  padding: 0px 10px;
+  font-weight: 700;
+  font-size: 12px;
+  margin-left: 15px;
+  background-color: #f44336;
+  color: #ffffff;
+  border-radius: 10px;
+}

@@ -1,7 +1,7 @@
-const { dbClient } = require("../db/postgres");
+const { getClient } = require("../db/postgres");
 
 exports.createAdminAccount = (req, res) => {
-  const pgClient = dbClient();
+  const pgClient = getClient();
 
   pgClient
     .query("INSERT INTO users (user_id, username, password) VALUES(DEFAULT, 'admin', 'admin')")

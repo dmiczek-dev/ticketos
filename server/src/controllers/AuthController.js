@@ -1,8 +1,8 @@
-const { dbClient } = require("../db/postgres");
+const { getClient } = require("../db/postgres");
 const { generateAccessToken } = require("../helpers/auth");
 
 exports.login = (req, res) => {
-  const pgClient = dbClient();
+  const pgClient = getClient();
   const username = req.body.username;
   const password = req.body.password;
 

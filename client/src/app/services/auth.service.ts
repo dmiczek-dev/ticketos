@@ -11,7 +11,7 @@ export class AuthService {
   constructor(private http: HttpClient) {}
 
   signIn(user: any) {
-    return this.http.post<any>(this._ip + 'auth', user);
+    return this.http.post<any>(this._ip + '/auth', user);
   }
 
   loggedIn() {

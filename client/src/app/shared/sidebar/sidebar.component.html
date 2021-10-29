@@ -1,0 +1,45 @@
+<mat-nav-list>
+  <div class="profile-card">
+    <div class="header">
+      <img src="../../../../assets/images/ticketos_logo.png" width="250px" />
+    </div>
+  </div>
+
+  <mat-divider></mat-divider>
+
+  <h2 matSubheader>TicketOS</h2>
+
+  <a mat-list-item routerLink="/panel" routerLinkActive="list-item-active"
+    ><mat-icon>dashboard</mat-icon>Dashboard</a
+  >
+  <a mat-list-item routerLink="./placowki" routerLinkActive="list-item-active"
+    ><mat-icon>business</mat-icon>Podmioty medyczne</a
+  >
+  <a mat-list-item routerLink="./stanowiska" routerLinkActive="list-item-active"
+    ><mat-icon>queue_play_next</mat-icon>Gabinety i stanowiska</a
+  >
+  <a mat-list-item routerLink="./priorytety" routerLinkActive="list-item-active"
+    ><mat-icon>transfer_within_a_station</mat-icon>Rodzaje biletów</a
+  >
+
+  <a mat-list-item routerLink="./pracownie" routerLinkActive="list-item-active"
+    ><mat-icon>biotech</mat-icon>Pracownie</a
+  >
+
+  <a mat-list-item routerLink="./ustawienia" routerLinkActive="list-item-active"
+    ><mat-icon>print</mat-icon>Ustawienia wydruku</a
+  >
+  <a mat-list-item routerLink="./bilety" routerLinkActive="list-item-active"
+    ><mat-icon>receipt</mat-icon>Bilety<span class="live">Na żywo </span></a
+  >
+
+  <h2 matSubheader>Opcje</h2>
+
+  <a
+    mat-list-item
+    *ngIf="isLoggedIn"
+    (click)="logout()"
+    routerLinkActive="list-item-active"
+    ><mat-icon>logout</mat-icon>Wyloguj</a
+  >
+</mat-nav-list>

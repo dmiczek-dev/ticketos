@@ -1,0 +1,62 @@
+<div class="mat-elevation-z1">
+  <button
+    mat-raised-button
+    class="primary-color-bg"
+    (click)="addCenter({ action: 'add' })"
+  >
+    Dodaj podmiot
+  </button>
+  <mat-table [dataSource]="centers" class="mat-elevation-z8">
+    <!-- Counter Column -->
+    <ng-container matColumnDef="id">
+      <mat-header-cell *matHeaderCellDef> Id </mat-header-cell>
+      <mat-cell *matCellDef="let element">{{ element.id }}</mat-cell>
+    </ng-container>
+    <!-- Name Column -->
+    <ng-container matColumnDef="name">
+      <mat-header-cell *matHeaderCellDef> Nazwa </mat-header-cell>
+      <mat-cell *matCellDef="let element">{{ element.name }}</mat-cell>
+    </ng-container>
+    <!-- Shortcut Column -->
+    <ng-container matColumnDef="shortcut">
+      <mat-header-cell *matHeaderCellDef> Skrót </mat-header-cell>
+      <mat-cell *matCellDef="let element">{{ element.shortcut }}</mat-cell>
+    </ng-container>
+    <!-- Options Column -->
+    <ng-container matColumnDef="options">
+      <mat-header-cell *matHeaderCellDef fxFlex="20"> Opcje </mat-header-cell>
+      <mat-cell *matCellDef="let element" fxFlex="20">
+        <button
+          mat-raised-button
+          class="warn-color-bg"
+          (click)="
+            editCenter({
+              id: element.id,
+              name: element.name,
+              shortcut: element.shortcut,
+              action: 'edit'
+            })
+          "
+        >
+          Edytuj
+        </button>
+        <button
+          mat-raised-button
+          color="warn"
+          (click)="
+            deleteCenter({
+              id: element.id,
+              name: element.name,
+              shortcut: element.shortcut,
+              action: 'delete'
+            })
+          "
+        >
+          Usuń
+        </button>
+      </mat-cell>
+    </ng-container>
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+  </mat-table>
+</div>

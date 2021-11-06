@@ -27,7 +27,7 @@ app.use(express.json());
 app.use(cors(corsOptions));
 
 app.use("/api/auth", authRoutes);
-app.use("/api/centers", centerRoutes);
+app.use("/api", centerRoutes);
 app.use("/api/offices", officeRoutes);
 app.use("/api/ticket-types", ticketTypeRoutes);
 app.use("/api/users", userRoutes);

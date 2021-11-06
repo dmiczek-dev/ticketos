@@ -15,21 +15,3 @@ mat-drawer-container {
 mat-drawer-content {
   padding: 20px;
 }
-
-@media print {
-  mat-drawer {
-    display: none;
-  }
-
-  .mat-drawer-content {
-    margin-left: 0px !important;
-  }
-
-  app-header {
-    display: none;
-  }
-
-  app-footer {
-    display: none;
-  }
-}

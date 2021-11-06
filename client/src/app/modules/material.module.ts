@@ -8,17 +8,31 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
 import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatButtonModule } from '@angular/material/button';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatSelectModule } from '@angular/material/select';
+import { MatTableModule } from '@angular/material/table';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 const materialModules = [
-  CommonModule,
-  MatCardModule,
-  MatFormFieldModule,
-  MatInputModule,
-  MatDividerModule,
-  MatIconModule,
   MatSidenavModule,
-  MatListModule,
+  MatDividerModule,
+  MatCardModule,
+  MatDialogModule,
+  MatFormFieldModule,
+  MatSelectModule,
+  MatInputModule,
+  MatButtonModule,
+  MatTableModule,
+  MatIconModule,
+  MatSlideToggleModule,
   MatToolbarModule,
+  MatListModule,
+  MatMenuModule,
+  MatSnackBarModule,
+  CommonModule,
 ];
 
 @NgModule({

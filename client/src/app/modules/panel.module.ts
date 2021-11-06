@@ -9,9 +9,19 @@ import { DashboardComponent } from '../components/panel/dashboard/dashboard.comp
 import { SharedModule } from './shared.module';
 import { PanelComponent } from '../layouts/panel/panel.component';
 import { RouterModule } from '@angular/router';
+import {
+  CenterComponent,
+  CenterDialogComponent,
+} from '../components/panel/center/center.component';
 
 @NgModule({
-  declarations: [PanelComponent, LoginComponent, DashboardComponent],
+  declarations: [
+    PanelComponent,
+    LoginComponent,
+    DashboardComponent,
+    CenterComponent,
+    CenterDialogComponent,
+  ],
   imports: [
     CommonModule,
     MaterialModule,

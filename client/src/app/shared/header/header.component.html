@@ -1,33 +1,14 @@
-<mat-toolbar>
-  <mat-toolbar-row>
-    <button mat-icon-button (click)="toggleSideBar()">
-      <mat-icon>menu</mat-icon>
-    </button>
-    <span>Panel kontroly TicketOS</span>
-
-    <div fxFlex fxLayout="row" fxLayoutAlign="flex-end">
-      <ul fxLayout="row" fxLayoutGap="20px">
-        <li>
-          <button mat-button (click)="refreshPortableScreens()">
-            <mat-icon
-              style="
-                font-size: 26px;
-                height: 26px;
-                width: 26px;
-                line-height: 24px;
-              "
-              >refresh</mat-icon
-            >
-            Odśwież widoki
-          </button>
-        </li>
-        <li *ngIf="isLoggedIn" (click)="logout()">
-          <button mat-icon-button>
-            <mat-icon>logout</mat-icon>
-            Wyloguj
-          </button>
-        </li>
-      </ul>
-    </div>
-  </mat-toolbar-row>
+<mat-toolbar color="primary">
+  <button mat-icon-button (click)="toggleSideBar()">
+    <mat-icon>menu</mat-icon>
+  </button>
+  <span>Panel Administracyjny</span>
+  <span class="example-spacer"></span>
+  <button mat-icon-button (click)="refreshPortableScreens()">
+    <mat-icon>refresh</mat-icon>
+  </button>
+  <mat-divider></mat-divider>
+  <button mat-icon-button (click)="logout()">
+    <mat-icon>logout</mat-icon>
+  </button>
 </mat-toolbar>

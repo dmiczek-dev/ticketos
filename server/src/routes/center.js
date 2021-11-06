@@ -1,11 +1,12 @@
 const express = require("express");
 const CenterController = require("../controllers/CenterController");
+const { validateCreateCenter, validateEditCenter, validateDeleteCenter } = require("../middleware/validate");
 const router = express.Router();
 
-router.get("/", CenterController.getCenters);
-router.get("/:shortcut", CenterController.getCenterByShortcut);
-router.post("/create", CenterController.createCenter);
-router.post("/edit", CenterController.editCenter);
-router.post("/delete", CenterController.deleteCenter);
+router.get("/centers", [CenterController.getCenters]);
+router.get("/centers/:shortcut", [CenterController.getCenterByShortcut]);
+router.post("/create-center", [validateCreateCenter, CenterController.createCenter]);
+router.post("/edit-center", [validateEditCenter, CenterController.editCenter]);
+router.post("/delete-center", [validateDeleteCenter, CenterController.deleteCenter]);
 
 module.exports = router;

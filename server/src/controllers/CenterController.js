@@ -1,12 +1,10 @@
-const { dbClient } = require("../db/postgres");
+const { getClient } = require("../db/postgres");
 
 exports.getCenters = (req, res) => {
-  const pgClient = dbClient();
+  const pgClient = getClient();
 
   pgClient
-    .query(
-      'SELECT c.center_id AS "centerId", c.name, c.shortcut, COUNT(o.number) AS "offices" FROM centers c LEFT JOIN offices o USING(center_id) WHERE c.active = true GROUP BY p.name, p.center_id, p.shortcut'
-    )
+    .query('SELECT center_id AS "id", name, shortcut FROM centers')
     .then((result) => {
       res.status(200).send(result.rows);
     })
@@ -20,14 +18,11 @@ exports.getCenters = (req, res) => {
 };
 
 exports.getCenterByShortcut = (req, res) => {
-  const pgClient = dbClient();
+  const pgClient = getClient();
   const shortcut = req.params.shortcut;
 
   pgClient
-    .query(
-      'SELECT center_id AS "centerId", name, active, shortcut FROM centers WHERE shortcut ilike $1',
-      [shortcut]
-    )
+    .query('SELECT center_id AS "centerId", name, active, shortcut FROM centers WHERE shortcut ilike $1', [shortcut])
     .then((result) => {
       res.status(200).send(result.rows);
     })
@@ -41,15 +36,12 @@ exports.getCenterByShortcut = (req, res) => {
 };
 
 exports.createCenter = (req, res) => {
-  const pgClient = dbClient();
+  const pgClient = getClient();
   const name = req.body.name;
   const shortcut = req.body.shortcut;
 
   pgClient
-    .query("INSERT INTO centers VALUES (DEFAULT, $1, true, $2)", [
-      name,
-      shortcut,
-    ])
+    .query("INSERT INTO centers VALUES (DEFAULT, $1, $2)", [name, shortcut])
     .then((result) => {
       res.status(200).send(result.rows);
     })
@@ -63,17 +55,14 @@ exports.createCenter = (req, res) => {
 };
 
 exports.editCenter = (req, res) => {
-  const pgClient = dbClient();
+  console.log(req.body);
+  const pgClient = getClient();
   const name = req.body.name;
   const shortcut = req.body.shortcut;
-  const centerId = req.body.centerId;
+  const id = req.body.id;
 
   pgClient
-    .query("UPDATE centers SET name = $1, shortcut = $2 WHERE center_id = $3", [
-      name,
-      shortcut,
-      centerId,
-    ])
+    .query("UPDATE centers SET name = $1, shortcut = $2 WHERE center_id = $3", [name, shortcut, id])
     .then((result) => {
       res.status(200).send(result.rows);
     })
@@ -87,11 +76,12 @@ exports.editCenter = (req, res) => {
 };
 
 exports.deleteCenter = (req, res) => {
-  const pgClient = dbClient();
-  const centerId = req.body.centerId;
+  console.log(req.body);
+  const pgClient = getClient();
+  const id = req.body.id;
 
   pgClient
-    .query("DELETE FROM centers WHERE center_id = $1", [centerId])
+    .query("DELETE FROM centers WHERE center_id = $1", [id])
     .then(() => {
       res.status(200).send({ message: "Center deleted successfully" });
     })

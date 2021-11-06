@@ -17,7 +17,7 @@ export class TokenService implements HttpInterceptor {
     } else {
       let tokenizedReq = req.clone({
         setHeaders: {
-          Authorization: `Bearer ${authSrv.getToken()}`,
+          authorization: `Bearer ${authSrv.getToken()}`,
         },
       });
       return next.handle(tokenizedReq);

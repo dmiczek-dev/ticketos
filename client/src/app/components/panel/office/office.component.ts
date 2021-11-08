@@ -6,35 +6,54 @@ import {
 } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { CenterService } from 'src/app/services/center.service';
+import { OfficeService } from 'src/app/services/office.service';
 
 export interface DialogData {
-  centerId: number;
+  officeId: number;
   name: string;
-  shortcut: string;
+  mask: boolean;
+  centerId: number;
   action: string;
+  centers: any;
 }
 
 @Component({
-  selector: 'app-center',
-  templateUrl: './center.component.html',
-  styleUrls: ['./center.component.scss'],
+  selector: 'app-office',
+  templateUrl: './office.component.html',
+  styleUrls: ['./office.component.scss'],
 })
-export class CenterComponent implements OnInit {
+export class OfficeComponent implements OnInit {
+  offices = [];
   centers = [];
   action: string | undefined;
   name: string | undefined;
-  shortcut: string | undefined;
+  mask: boolean | undefined;
+  officeId: number | undefined;
   centerId: number | undefined;
 
-  displayedColumns: string[] = ['centerId', 'name', 'shortcut', 'options'];
+  displayedColumns: string[] = [
+    'officeId',
+    'name',
+    'mask',
+    'centerId',
+    'options',
+  ];
   constructor(
     public dialog: MatDialog,
+    private _officeSrv: OfficeService,
     private _centerSrv: CenterService,
     private _snackBar: MatSnackBar
   ) {}
 
   ngOnInit(): void {
+    this.getOffices();
     this.getCenters();
+  }
+
+  getOffices() {
+    this._officeSrv.getOffices().subscribe((res) => {
+      this.offices = res;
+    });
   }
 
   getCenters() {
@@ -43,45 +62,54 @@ export class CenterComponent implements OnInit {
     });
   }
 
-  addCenter(data: any) {
-    this.centerId = undefined;
+  addOffice(data: any) {
+    this.officeId = undefined;
     this.name = undefined;
-    this.shortcut = undefined;
+    this.mask = undefined;
+    this.centerId = undefined;
     this.action = data.action;
     this.openDialog();
   }
-  editCenter(data: any) {
-    this.centerId = data.centerId;
+  editOffice(data: any) {
+    this.officeId = data.officeId;
     this.name = data.name;
-    this.shortcut = data.shortcut;
+    this.mask = data.mask;
+    this.centerId = data.centerId;
     this.action = data.action;
     this.openDialog();
   }
-  deleteCenter(data: any) {
-    this.centerId = data.centerId;
+  deleteOffice(data: any) {
+    this.officeId = data.officeId;
     this.action = data.action;
     this.openDialog();
   }
 
   openDialog() {
-    const dialogRef = this.dialog.open(CenterDialogComponent, {
+    const dialogRef = this.dialog.open(OfficeDialogComponent, {
       width: '350px',
       data: {
-        centerId: this.centerId,
+        officeId: this.officeId,
         name: this.name,
-        shortcut: this.shortcut,
+        mask: this.mask,
+        centerId: this.centerId,
         action: this.action,
+        centers: this.centers,
       },
     });
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
         switch (result.action) {
           case 'add':
-            this._centerSrv
-              .addCenter({ name: result.name, shortcut: result.shortcut })
+            console.log(result);
+            this._officeSrv
+              .addOffice({
+                name: result.name,
+                mask: result.mask,
+                centerId: result.centerId,
+              })
               .subscribe(
                 (res) => {
-                  this._snackBar.open('Podmiot został utworzony', '', {
+                  this._snackBar.open('Gabinet został utworzony', '', {
                     duration: 5000,
                     verticalPosition: 'top',
                     horizontalPosition: 'right',
@@ -89,7 +117,7 @@ export class CenterComponent implements OnInit {
                   });
                 },
                 (error) => {
-                  this._snackBar.open('Błąd podczas tworzenia podmiotu', '', {
+                  this._snackBar.open('Błąd podczas tworzenia gabinetu', '', {
                     duration: 5000,
                     verticalPosition: 'top',
                     horizontalPosition: 'right',
@@ -97,20 +125,21 @@ export class CenterComponent implements OnInit {
                   });
                 },
                 () => {
-                  this.getCenters();
+                  this.getOffices();
                 }
               );
             break;
           case 'edit':
-            this._centerSrv
-              .editCenter({
-                centerId: result.centerId,
+            this._officeSrv
+              .editOffice({
+                officeId: result.officeId,
                 name: result.name,
-                shortcut: result.shortcut,
+                mask: result.mask,
+                centerId: result.centerId,
               })
               .subscribe(
                 (res) => {
-                  this._snackBar.open('Podmiot został edytowany', '', {
+                  this._snackBar.open('Gabinet został edytowany', '', {
                     duration: 5000,
                     verticalPosition: 'top',
                     horizontalPosition: 'right',
@@ -118,7 +147,7 @@ export class CenterComponent implements OnInit {
                   });
                 },
                 (error) => {
-                  this._snackBar.open('Błąd podczas edycji podmiotu', '', {
+                  this._snackBar.open('Błąd podczas edycji gabinetu', '', {
                     duration: 5000,
                     verticalPosition: 'top',
                     horizontalPosition: 'right',
@@ -126,16 +155,16 @@ export class CenterComponent implements OnInit {
                   });
                 },
                 () => {
-                  this.getCenters();
+                  this.getOffices();
                 }
               );
             break;
           case 'delete':
-            this._centerSrv
-              .deleteCenter({ centerId: result.centerId })
+            this._officeSrv
+              .deleteOffice({ officeId: result.officeId })
               .subscribe(
                 (res) => {
-                  this._snackBar.open('Podmiot został usunięty', '', {
+                  this._snackBar.open('Gabinet został usunięty', '', {
                     duration: 5000,
                     verticalPosition: 'top',
                     horizontalPosition: 'right',
@@ -143,7 +172,7 @@ export class CenterComponent implements OnInit {
                   });
                 },
                 (error) => {
-                  this._snackBar.open('Błąd podczas usuwania podmiotu', '', {
+                  this._snackBar.open('Błąd podczas usuwania gabinetu', '', {
                     duration: 5000,
                     verticalPosition: 'top',
                     horizontalPosition: 'right',
@@ -151,7 +180,7 @@ export class CenterComponent implements OnInit {
                   });
                 },
                 () => {
-                  this.getCenters();
+                  this.getOffices();
                 }
               );
             break;
@@ -163,12 +192,12 @@ export class CenterComponent implements OnInit {
 
 // Dialog Component
 @Component({
-  selector: 'app-center-dialog',
-  templateUrl: './center-dialog-component.html',
+  selector: 'app-office-dialog',
+  templateUrl: './office-dialog-component.html',
 })
-export class CenterDialogComponent {
+export class OfficeDialogComponent {
   constructor(
-    public dialogRef: MatDialogRef<CenterDialogComponent>,
+    public dialogRef: MatDialogRef<OfficeDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData
   ) {}
 

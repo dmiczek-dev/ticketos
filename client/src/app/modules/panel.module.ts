@@ -13,6 +13,11 @@ import {
   CenterComponent,
   CenterDialogComponent,
 } from '../components/panel/center/center.component';
+import {
+  OfficeComponent,
+  OfficeDialogComponent,
+} from '../components/panel/office/office.component';
+import { TicketComponent } from '../components/panel/ticket/ticket.component';
 
 @NgModule({
   declarations: [
@@ -21,6 +26,9 @@ import {
     DashboardComponent,
     CenterComponent,
     CenterDialogComponent,
+    OfficeComponent,
+    OfficeDialogComponent,
+    TicketComponent,
   ],
   imports: [
     CommonModule,

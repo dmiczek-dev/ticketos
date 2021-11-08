@@ -4,7 +4,7 @@ exports.getCenters = (req, res) => {
   const pgClient = getClient();
 
   pgClient
-    .query('SELECT center_id AS "id", name, shortcut FROM centers')
+    .query('SELECT center_id AS "centerId", name, shortcut FROM centers')
     .then((result) => {
       res.status(200).send(result.rows);
     })
@@ -55,14 +55,13 @@ exports.createCenter = (req, res) => {
 };
 
 exports.editCenter = (req, res) => {
-  console.log(req.body);
   const pgClient = getClient();
   const name = req.body.name;
   const shortcut = req.body.shortcut;
-  const id = req.body.id;
+  const centerId = req.body.centerId;
 
   pgClient
-    .query("UPDATE centers SET name = $1, shortcut = $2 WHERE center_id = $3", [name, shortcut, id])
+    .query("UPDATE centers SET name = $1, shortcut = $2 WHERE center_id = $3", [name, shortcut, centerId])
     .then((result) => {
       res.status(200).send(result.rows);
     })
@@ -76,12 +75,11 @@ exports.editCenter = (req, res) => {
 };
 
 exports.deleteCenter = (req, res) => {
-  console.log(req.body);
   const pgClient = getClient();
-  const id = req.body.id;
+  const centerId = req.body.centerId;
 
   pgClient
-    .query("DELETE FROM centers WHERE center_id = $1", [id])
+    .query("DELETE FROM centers WHERE center_id = $1", [centerId])
     .then(() => {
       res.status(200).send({ message: "Center deleted successfully" });
     })

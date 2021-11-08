@@ -2,25 +2,32 @@
   <button
     mat-raised-button
     class="primary-color-bg"
-    (click)="addCenter({ action: 'add' })"
+    (click)="addOffice({ action: 'add' })"
   >
-    Dodaj podmiot
+    Dodaj gabinet
   </button>
-  <mat-table [dataSource]="centers" class="mat-elevation-z8">
+  <mat-table [dataSource]="offices" class="mat-elevation-z8">
     <!-- Counter Column -->
-    <ng-container matColumnDef="centerId">
+    <ng-container matColumnDef="officeId">
       <mat-header-cell *matHeaderCellDef> Id </mat-header-cell>
-      <mat-cell *matCellDef="let element">{{ element.centerId }}</mat-cell>
+      <mat-cell *matCellDef="let element">{{ element.officeId }}</mat-cell>
     </ng-container>
     <!-- Name Column -->
     <ng-container matColumnDef="name">
       <mat-header-cell *matHeaderCellDef> Nazwa </mat-header-cell>
       <mat-cell *matCellDef="let element">{{ element.name }}</mat-cell>
     </ng-container>
-    <!-- Shortcut Column -->
-    <ng-container matColumnDef="shortcut">
-      <mat-header-cell *matHeaderCellDef> Skrót </mat-header-cell>
-      <mat-cell *matCellDef="let element">{{ element.shortcut }}</mat-cell>
+    <!-- Mask Column -->
+    <ng-container matColumnDef="mask">
+      <mat-header-cell *matHeaderCellDef> Maskowanie </mat-header-cell>
+      <mat-cell *matCellDef="let element">{{ element.mask }}</mat-cell>
+    </ng-container>
+    <!-- Mask Column -->
+    <ng-container matColumnDef="centerId">
+      <mat-header-cell *matHeaderCellDef>
+        Podmiot medyczny (id)
+      </mat-header-cell>
+      <mat-cell *matCellDef="let element">{{ element.centerId }}</mat-cell>
     </ng-container>
     <!-- Options Column -->
     <ng-container matColumnDef="options">
@@ -30,10 +37,11 @@
           mat-raised-button
           class="warn-color-bg"
           (click)="
-            editCenter({
-              centerId: element.centerId,
+            editOffice({
+              officeId: element.officeId,
               name: element.name,
-              shortcut: element.shortcut,
+              mask: element.mask,
+              centerId: element.centerId,
               action: 'edit'
             })
           "
@@ -44,10 +52,11 @@
           mat-raised-button
           color="warn"
           (click)="
-            deleteCenter({
-              centerId: element.centerId,
+            deleteOffice({
+              officeId: element.officeId,
               name: element.name,
-              shortcut: element.shortcut,
+              mask: element.mask,
+              centerId: element.centerId,
               action: 'delete'
             })
           "

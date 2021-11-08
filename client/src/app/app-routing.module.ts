@@ -4,6 +4,8 @@ import { AuthGuard } from './auth.guard';
 import { CenterComponent } from './components/panel/center/center.component';
 import { DashboardComponent } from './components/panel/dashboard/dashboard.component';
 import { LoginComponent } from './components/panel/login/login.component';
+import { OfficeComponent } from './components/panel/office/office.component';
+import { TicketComponent } from './components/panel/ticket/ticket.component';
 import { PanelComponent } from './layouts/panel/panel.component';
 
 const routes: Routes = [
@@ -26,6 +28,8 @@ const routes: Routes = [
         component: DashboardComponent,
       },
       { path: 'podmioty-medyczne', component: CenterComponent },
+      { path: 'gabinety', component: OfficeComponent },
+      { path: 'rodzaje-biletow', component: TicketComponent },
     ],
   },
 ];

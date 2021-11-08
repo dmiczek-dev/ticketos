@@ -1,12 +1,10 @@
-const { dbClient } = require("../db/postgres");
+const { getClient } = require("../db/postgres");
 
 exports.getOffices = (req, res) => {
-  const pgClient = dbClient();
+  const pgClient = getClient();
 
   pgClient
-    .query(
-      'SELECT office_id AS "officeId", number, center_id AS "centerId", name FROM offices ORDER BY number'
-    )
+    .query('SELECT office_id AS "officeId", name, mask, center_id AS "centerId" FROM offices ORDER BY office_id')
     .then((result) => {
       res.status(200).send(result.rows);
     })
@@ -20,14 +18,11 @@ exports.getOffices = (req, res) => {
 };
 
 exports.getOfficeById = (req, res) => {
-  const pgClient = dbClient();
+  const pgClient = getClient();
   const officeId = req.params.officeId;
 
   pgClient
-    .query(
-      'SELECT office_id AS "officeId", number, center_id AS "centerId", name FROM offices WHERE office_id = $1',
-      [officeId]
-    )
+    .query('SELECT office_id AS "officeId", name, mask, center_id AS "centerId" FROM offices WHERE office_id = $1', [officeId])
     .then((result) => {
       res.status(200).send(result.rows);
     })
@@ -41,16 +36,13 @@ exports.getOfficeById = (req, res) => {
 };
 
 exports.createOffice = (req, res) => {
-  const pgClient = dbClient();
-  const number = req.body.number;
+  const pgClient = getClient();
+  const mask = req.body.mask;
   const centerId = req.body.centerId;
   const name = req.body.name;
 
   pgClient
-    .query(
-      "INSERT INTO offices(office_id, number, center_id, name) VALUES (DEFAULT, $1, $2, $3)",
-      [number, centerId, name]
-    )
+    .query("INSERT INTO offices(office_id, name, mask, center_id) VALUES (DEFAULT, $1, $2, $3)", [name, mask, centerId])
     .then((result) => {
       res.status(200).send(result.rows);
     })
@@ -64,17 +56,14 @@ exports.createOffice = (req, res) => {
 };
 
 exports.editOffice = (req, res) => {
-  const pgClient = dbClient();
-  const number = req.body.number;
+  const pgClient = getClient();
   const name = req.body.name;
+  const mask = req.body.mask;
+  const centerId = req.body.centerId;
   const officeId = req.body.officeId;
 
   pgClient
-    .query("UPDATE offices SET number = $1, name = $2, WHERE office_id = $3", [
-      number,
-      name,
-      officeId,
-    ])
+    .query("UPDATE offices SET name = $1, mask = $2, center_id = $3 WHERE office_id = $4", [name, mask, centerId, officeId])
     .then((result) => {
       res.status(200).send(result.rows);
     })
@@ -88,8 +77,8 @@ exports.editOffice = (req, res) => {
 };
 
 exports.deleteOffice = (req, res) => {
-  const pgClient = dbClient();
-  const officeId = req.body.centerId;
+  const pgClient = getClient();
+  const officeId = req.body.officeId;
 
   pgClient
     .query("DELETE FROM offices WHERE office_id = $1", [officeId])

@@ -17,7 +17,7 @@ exports.login = (req, res) => {
       } else {
         let dbUser = result.rows[0];
         const accessToken = generateAccessToken({ userId: dbUser.userId });
-        res.status(200).send({ accessToken });
+        res.status(200).send({ token: accessToken });
       }
     })
     .catch((err) => {

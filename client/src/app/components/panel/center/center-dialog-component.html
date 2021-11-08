@@ -3,11 +3,11 @@
   podmiot" : "Usuń podmiot" }}
 </h1>
 <div mat-dialog-content fxLayout="column" *ngIf="data.action !== 'delete'">
-  <mat-form-field fxFlex>
+  <mat-form-field fxFlex appearance="outline">
     <mat-label>Nazwa</mat-label>
     <input matInput [(ngModel)]="data.name" required />
   </mat-form-field>
-  <mat-form-field fxFlex>
+  <mat-form-field fxFlex appearance="outline">
     <mat-label>Skrót</mat-label>
     <input matInput [(ngModel)]="data.shortcut" required />
   </mat-form-field>
@@ -20,7 +20,7 @@
   <button
     mat-button
     [mat-dialog-close]="{
-      id: data.id,
+      centerId: data.centerId,
       name: data.name,
       shortcut: data.shortcut,
       action: data.action

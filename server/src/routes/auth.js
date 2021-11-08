@@ -4,6 +4,6 @@ const { validateSignIn } = require("../middleware/validate");
 
 const router = express.Router();
 
-router.post("/", [validateSignIn, AuthController.login]);
+router.post("/auth", [validateSignIn, AuthController.login]);
 
 module.exports = router;

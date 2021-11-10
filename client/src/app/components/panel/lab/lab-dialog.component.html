@@ -1,0 +1,56 @@
+<h1 mat-dialog-title>
+  {{
+    data.action === "add"
+      ? "Dodaj pracownie"
+      : data.action === "edit"
+      ? "Edytuj
+  pracownie"
+      : "Usuń pracownie"
+  }}
+</h1>
+<div mat-dialog-content fxLayout="column" *ngIf="data.action !== 'delete'">
+  <mat-form-field appearance="outline" fxFlex>
+    <mat-label>Podmiot medyczny</mat-label>
+    <mat-select [(value)]="data.centerId" name="centerId">
+      <mat-option
+        *ngFor="let center of data.centers"
+        [value]="center.centerId"
+        >{{ center.name }}</mat-option
+      >
+    </mat-select>
+  </mat-form-field>
+  <mat-form-field fxFlex appearance="outline">
+    <mat-label>Nazwa</mat-label>
+    <input matInput [(ngModel)]="data.name" required />
+  </mat-form-field>
+  <mat-form-field appearance="outline" fxFill>
+    <mat-label>Opis</mat-label>
+    <textarea
+      matInput
+      cdkTextareaAutosize
+      #autosize="cdkTextareaAutosize"
+      cdkAutosizeMinRows="1"
+      cdkAutosizeMaxRows="5"
+    ></textarea>
+  </mat-form-field>
+</div>
+<div mat-dialog-content *ngIf="data.action === 'delete'">
+  <p>Czy napewno chcesz usunąć wskazany element?</p>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">Anuluj</button>
+  <button
+    mat-button
+    [mat-dialog-close]="{
+      labId: data.labId,
+      name: data.name,
+      description: data.description,
+      centerId: data.centerId,
+      action: data.action
+    }"
+    cdkFocusInitial
+    color="primary"
+  >
+    {{ data.action !== "delete" ? "Zapisz" : "Potwierdzam" }}
+  </button>
+</div>

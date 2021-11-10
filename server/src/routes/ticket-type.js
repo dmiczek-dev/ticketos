@@ -1,18 +1,17 @@
 const express = require("express");
 const TicketTypeController = require("../controllers/TicketTypeController");
+const { validateCreateTicketType, validateEditTicketType, validateDeleteTicketType } = require("../middleware/validate");
+const { authenticate } = require("../middleware/authenticate");
 const router = express.Router();
 
-// router.get("/", TicketTypeController.getTicketTypes);
-// router.post("/create", TicketTypeController.createTicketType);
-// router.post("/edit", TicketTypeController.editTicketType);
-// router.post("/delete", TicketTypeController.deleteTicketType);
-// router.get("/get-by-office", TicketTypeController.getTicketTypesByOfficeId);
-// router.get("/get-by-center", TicketTypeController.getTicketTypesByCenter);
-// router.post("/add-to-office", TicketTypeController.addTicketTypeToOffice);
-// router.post(
-//   "/remove-from-office",
-//   TicketTypeController.removeTicketTypeFromOffice
-// );
-// router.post("/change-order", TicketTypeController.removeTicketTypeFromOffice);
+router.get("/ticket-types", TicketTypeController.getTicketTypes);
+router.post("/create-ticket-type", [authenticate, validateCreateTicketType, TicketTypeController.createTicketType]);
+router.post("/edit-ticket-type", [authenticate, validateEditTicketType, TicketTypeController.editTicketType]);
+router.post("/delete-ticket-type", [authenticate, validateDeleteTicketType, TicketTypeController.deleteTicketType]);
+router.post("/unpinned-ticket-types", TicketTypeController.getUnpinnedTicketTypesByOfficeId);
+router.post("/pinned-ticket-types", TicketTypeController.getPinnedTicketTypesByOfficeId);
+router.post("/add-ticket-type-to-office", TicketTypeController.addTicketTypeToOffice);
+router.post("/remove-ticket-type-from-office", TicketTypeController.removeTicketTypeFromOffice);
+router.post("/optimize-sequence-in-office", TicketTypeController.optimizeSequence);
 
 module.exports = router;

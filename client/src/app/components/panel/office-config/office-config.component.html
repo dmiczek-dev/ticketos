@@ -1,0 +1,63 @@
+<mat-card fxFlex="50">
+  <mat-card-header>
+    <mat-card-title>Obsługiwane bilety</mat-card-title>
+  </mat-card-header>
+  <mat-card-content fxLayout="row" fxLayoutGap="20px">
+    <div class="example-container">
+      <div
+        cdkDropList
+        #pinnedList="cdkDropList"
+        [cdkDropListData]="pinnedTicketTypes"
+        [cdkDropListConnectedTo]="[unpinnedList]"
+        class="example-list"
+        (cdkDropListDropped)="drop($event, 'update')"
+        [style.height.px]="
+          unpinnedTicketTypes?.length > pinnedTicketTypes?.length
+            ? 60.5 * unpinnedTicketTypes?.length
+            : 60.5 * pinnedTicketTypes?.length
+        "
+      >
+        <div
+          class="example-box"
+          *ngFor="let pinnedTicketType of pinnedTicketTypes"
+          cdkDrag
+        >
+          {{ pinnedTicketType?.name }}
+        </div>
+      </div>
+    </div>
+    <div class="example-container">
+      <div
+        cdkDropList
+        #unpinnedList="cdkDropList"
+        [cdkDropListData]="unpinnedTicketTypes"
+        [cdkDropListConnectedTo]="[pinnedList]"
+        class="example-list"
+        (cdkDropListDropped)="drop($event, 'delete')"
+        [style.height.px]="
+          unpinnedTicketTypes?.length > pinnedTicketTypes?.length
+            ? 60.5 * unpinnedTicketTypes?.length
+            : 60.5 * pinnedTicketTypes?.length
+        "
+      >
+        <div
+          class="example-box"
+          *ngFor="let unpinnedTicketType of unpinnedTicketTypes"
+          cdkDrag
+        >
+          {{ unpinnedTicketType.name }}
+        </div>
+      </div>
+    </div>
+  </mat-card-content>
+  <mat-card-actions>
+    <button
+      mat-raised-button
+      color="warn"
+      routerLink="../"
+      style="margin-left: 20px; margin-bottom: 5px"
+    >
+      Powrót
+    </button>
+  </mat-card-actions>
+</mat-card>

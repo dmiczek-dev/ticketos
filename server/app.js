@@ -9,6 +9,7 @@ const centerRoutes = require("./src/routes/center");
 const officeRoutes = require("./src/routes/office");
 const ticketTypeRoutes = require("./src/routes/ticket-type");
 const userRoutes = require("./src/routes/user");
+const labRoutes = require("./src/routes/lab");
 
 dotenv.config();
 const app = express();
@@ -29,8 +30,9 @@ app.use(cors(corsOptions));
 app.use("/api", authRoutes);
 app.use("/api", centerRoutes);
 app.use("/api", officeRoutes);
-app.use("/api/ticket-types", ticketTypeRoutes);
-app.use("/api/users", userRoutes);
+app.use("/api", ticketTypeRoutes);
+app.use("/api", userRoutes);
+app.use("/api", labRoutes);
 
 const server = app.listen(process.env.PORT, () => {
   console.log("Server is up!");

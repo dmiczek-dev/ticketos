@@ -1,0 +1,33 @@
+<h1 mat-dialog-title>
+  {{ data.action === "add" ? "Dodaj rodzaj biletu" : data.action === "edit" ?
+  "Edytuj rodzaj biletu" : "Usuń rodzaj biletu" }}
+</h1>
+<div mat-dialog-content fxLayout="column" *ngIf="data.action !== 'delete'">
+  <mat-form-field fxFlex appearance="outline">
+    <mat-label>Nazwa</mat-label>
+    <input matInput [(ngModel)]="data.name" required />
+  </mat-form-field>
+  <mat-form-field fxFlex appearance="outline">
+    <mat-label>Oznaczenie</mat-label>
+    <input matInput [(ngModel)]="data.mark" required />
+  </mat-form-field>
+</div>
+<div mat-dialog-content *ngIf="data.action === 'delete'">
+  <p>Czy napewno chcesz usunąć wskazany element?</p>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">Anuluj</button>
+  <button
+    mat-button
+    [mat-dialog-close]="{
+      ticketTypeId: data.ticketTypeId,
+      name: data.name,
+      mark: data.mark,
+      action: data.action
+    }"
+    cdkFocusInitial
+    color="primary"
+  >
+    {{ data.action !== "delete" ? "Zapisz" : "Potwierdzam" }}
+  </button>
+</div>

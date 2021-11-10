@@ -17,7 +17,16 @@ import {
   OfficeComponent,
   OfficeDialogComponent,
 } from '../components/panel/office/office.component';
-import { TicketComponent } from '../components/panel/ticket/ticket.component';
+import {
+  TicketTypeComponent,
+  TicketTypeDialogComponent,
+} from '../components/panel/ticket-type/ticket-type.component';
+import { OfficeConfigComponent } from '../components/panel/office-config/office-config.component';
+import { DragDropModule } from '@angular/cdk/drag-drop';
+import {
+  LabComponent,
+  LabDialogComponent,
+} from '../components/panel/lab/lab.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +37,11 @@ import { TicketComponent } from '../components/panel/ticket/ticket.component';
     CenterDialogComponent,
     OfficeComponent,
     OfficeDialogComponent,
-    TicketComponent,
+    OfficeConfigComponent,
+    TicketTypeComponent,
+    TicketTypeDialogComponent,
+    LabComponent,
+    LabDialogComponent,
   ],
   imports: [
     CommonModule,
@@ -38,6 +51,7 @@ import { TicketComponent } from '../components/panel/ticket/ticket.component';
     FlexLayoutModule,
     SharedModule,
     RouterModule,
+    DragDropModule,
   ],
 })
 export class PanelModule {}

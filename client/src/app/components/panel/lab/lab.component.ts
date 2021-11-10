@@ -6,53 +6,55 @@ import {
 } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { CenterService } from 'src/app/services/center.service';
-import { OfficeService } from 'src/app/services/office.service';
+import { LabService } from 'src/app/services/lab.service';
+import { OfficeDialogComponent } from '../office/office.component';
 
 export interface DialogData {
-  officeId: number;
+  labId: number;
   name: string;
-  mask: boolean;
+  description: string;
   centerId: number;
-  action: string;
   centers: any;
+  action: string;
 }
 
 @Component({
-  selector: 'app-office',
-  templateUrl: './office.component.html',
-  styleUrls: ['./office.component.scss'],
+  selector: 'app-lab',
+  templateUrl: './lab.component.html',
+  styleUrls: ['./lab.component.scss'],
 })
-export class OfficeComponent implements OnInit {
-  offices = [];
+export class LabComponent implements OnInit {
+  labs = [];
   centers = [];
   action: string | undefined;
   name: string | undefined;
-  mask: boolean | undefined;
-  officeId: number | undefined;
+  description: boolean | undefined;
+  labId: number | undefined;
   centerId: number | undefined;
 
   displayedColumns: string[] = [
-    'officeId',
+    'labId',
     'name',
-    'mask',
+    'description',
     'centerId',
     'options',
   ];
+
   constructor(
-    public dialog: MatDialog,
-    private _officeSrv: OfficeService,
     private _centerSrv: CenterService,
-    private _snackBar: MatSnackBar
+    private _labSrv: LabService,
+    private _snackBar: MatSnackBar,
+    public dialog: MatDialog
   ) {}
 
   ngOnInit(): void {
-    this.getOffices();
+    this.getLabs();
     this.getCenters();
   }
 
-  getOffices() {
-    this._officeSrv.getOffices().subscribe((res) => {
-      this.offices = res;
+  getLabs() {
+    this._labSrv.getLabs().subscribe((res) => {
+      this.labs = res;
     });
   }
 
@@ -62,35 +64,35 @@ export class OfficeComponent implements OnInit {
     });
   }
 
-  addOffice(data: any) {
-    this.officeId = undefined;
+  addLab(data: any) {
+    this.labId = undefined;
     this.name = undefined;
-    this.mask = undefined;
+    this.description = undefined;
     this.centerId = undefined;
     this.action = data.action;
     this.openDialog();
   }
-  editOffice(data: any) {
-    this.officeId = data.officeId;
+  editLab(data: any) {
+    this.labId = data.labId;
     this.name = data.name;
-    this.mask = data.mask;
+    this.description = data.description;
     this.centerId = data.centerId;
     this.action = data.action;
     this.openDialog();
   }
-  deleteOffice(data: any) {
-    this.officeId = data.officeId;
+  deleteLab(data: any) {
+    this.labId = data.labId;
     this.action = data.action;
     this.openDialog();
   }
 
   openDialog() {
-    const dialogRef = this.dialog.open(OfficeDialogComponent, {
+    const dialogRef = this.dialog.open(LabDialogComponent, {
       width: '350px',
       data: {
-        officeId: this.officeId,
+        labId: this.labId,
         name: this.name,
-        mask: this.mask,
+        description: this.description,
         centerId: this.centerId,
         action: this.action,
         centers: this.centers,
@@ -100,15 +102,15 @@ export class OfficeComponent implements OnInit {
       if (result) {
         switch (result.action) {
           case 'add':
-            this._officeSrv
-              .addOffice({
+            this._labSrv
+              .addLab({
                 name: result.name,
-                mask: result.mask,
+                description: result.description,
                 centerId: result.centerId,
               })
               .subscribe(
                 (res) => {
-                  this._snackBar.open('Gabinet został utworzony', '', {
+                  this._snackBar.open('Pracownia został utworzona', '', {
                     duration: 5000,
                     verticalPosition: 'top',
                     horizontalPosition: 'right',
@@ -116,7 +118,7 @@ export class OfficeComponent implements OnInit {
                   });
                 },
                 (error) => {
-                  this._snackBar.open('Błąd podczas tworzenia gabinetu', '', {
+                  this._snackBar.open('Błąd podczas tworzenia pracowni', '', {
                     duration: 5000,
                     verticalPosition: 'top',
                     horizontalPosition: 'right',
@@ -124,21 +126,21 @@ export class OfficeComponent implements OnInit {
                   });
                 },
                 () => {
-                  this.getOffices();
+                  this.getLabs();
                 }
               );
             break;
           case 'edit':
-            this._officeSrv
-              .editOffice({
-                officeId: result.officeId,
+            this._labSrv
+              .editLab({
+                labId: result.labId,
                 name: result.name,
-                mask: result.mask,
+                description: result.description,
                 centerId: result.centerId,
               })
               .subscribe(
                 (res) => {
-                  this._snackBar.open('Gabinet został edytowany', '', {
+                  this._snackBar.open('Pracownia została edytowana', '', {
                     duration: 5000,
                     verticalPosition: 'top',
                     horizontalPosition: 'right',
@@ -146,7 +148,7 @@ export class OfficeComponent implements OnInit {
                   });
                 },
                 (error) => {
-                  this._snackBar.open('Błąd podczas edycji gabinetu', '', {
+                  this._snackBar.open('Błąd podczas edycji pracowni', '', {
                     duration: 5000,
                     verticalPosition: 'top',
                     horizontalPosition: 'right',
@@ -154,34 +156,32 @@ export class OfficeComponent implements OnInit {
                   });
                 },
                 () => {
-                  this.getOffices();
+                  this.getLabs();
                 }
               );
             break;
           case 'delete':
-            this._officeSrv
-              .deleteOffice({ officeId: result.officeId })
-              .subscribe(
-                (res) => {
-                  this._snackBar.open('Gabinet został usunięty', '', {
-                    duration: 5000,
-                    verticalPosition: 'top',
-                    horizontalPosition: 'right',
-                    panelClass: ['green-snackbar'],
-                  });
-                },
-                (error) => {
-                  this._snackBar.open('Błąd podczas usuwania gabinetu', '', {
-                    duration: 5000,
-                    verticalPosition: 'top',
-                    horizontalPosition: 'right',
-                    panelClass: ['red-snackbar'],
-                  });
-                },
-                () => {
-                  this.getOffices();
-                }
-              );
+            this._labSrv.deleteLab({ labId: result.labId }).subscribe(
+              (res) => {
+                this._snackBar.open('Pracownia została usunięta', '', {
+                  duration: 5000,
+                  verticalPosition: 'top',
+                  horizontalPosition: 'right',
+                  panelClass: ['green-snackbar'],
+                });
+              },
+              (error) => {
+                this._snackBar.open('Błąd podczas usuwania pracowni', '', {
+                  duration: 5000,
+                  verticalPosition: 'top',
+                  horizontalPosition: 'right',
+                  panelClass: ['red-snackbar'],
+                });
+              },
+              () => {
+                this.getLabs();
+              }
+            );
             break;
         }
       }
@@ -191,12 +191,12 @@ export class OfficeComponent implements OnInit {
 
 // Dialog Component
 @Component({
-  selector: 'app-office-dialog',
-  templateUrl: './office-dialog-component.html',
+  selector: 'app-lab-dialog',
+  templateUrl: './lab-dialog.component.html',
 })
-export class OfficeDialogComponent {
+export class LabDialogComponent {
   constructor(
-    public dialogRef: MatDialogRef<OfficeDialogComponent>,
+    public dialogRef: MatDialogRef<LabDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData
   ) {}
 

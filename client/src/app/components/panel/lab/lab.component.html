@@ -2,15 +2,15 @@
   <button
     mat-raised-button
     class="primary-color-bg"
-    (click)="addOffice({ action: 'add' })"
+    (click)="addLab({ action: 'add' })"
   >
-    Dodaj gabinet
+    Dodaj pracownie
   </button>
-  <mat-table [dataSource]="offices" class="mat-elevation-z8">
+  <mat-table [dataSource]="labs" class="mat-elevation-z8">
     <!-- Counter Column -->
-    <ng-container matColumnDef="officeId">
+    <ng-container matColumnDef="labId">
       <mat-header-cell *matHeaderCellDef> Id </mat-header-cell>
-      <mat-cell *matCellDef="let element">{{ element.officeId }}</mat-cell>
+      <mat-cell *matCellDef="let element">{{ element.labId }}</mat-cell>
     </ng-container>
     <!-- Name Column -->
     <ng-container matColumnDef="name">
@@ -18,9 +18,9 @@
       <mat-cell *matCellDef="let element">{{ element.name }}</mat-cell>
     </ng-container>
     <!-- Mask Column -->
-    <ng-container matColumnDef="mask">
-      <mat-header-cell *matHeaderCellDef> Maskowanie </mat-header-cell>
-      <mat-cell *matCellDef="let element">{{ element.mask }}</mat-cell>
+    <ng-container matColumnDef="description">
+      <mat-header-cell *matHeaderCellDef> Opis </mat-header-cell>
+      <mat-cell *matCellDef="let element">{{ element.description }}</mat-cell>
     </ng-container>
     <!-- Mask Column -->
     <ng-container matColumnDef="centerId">
@@ -35,19 +35,12 @@
       <mat-cell *matCellDef="let element" fxFlex="20">
         <button
           mat-raised-button
-          class="primary-color-bg"
-          routerLink="./{{ element.officeId }}"
-        >
-          Bilety
-        </button>
-        <button
-          mat-raised-button
           class="warn-color-bg"
           (click)="
-            editOffice({
-              officeId: element.officeId,
+            editLab({
+              labId: element.labId,
               name: element.name,
-              mask: element.mask,
+              description: element.description,
               centerId: element.centerId,
               action: 'edit'
             })
@@ -59,10 +52,10 @@
           mat-raised-button
           color="warn"
           (click)="
-            deleteOffice({
-              officeId: element.officeId,
+            deleteLab({
+              labId: element.labId,
               name: element.name,
-              mask: element.mask,
+              description: element.description,
               centerId: element.centerId,
               action: 'delete'
             })

@@ -5,110 +5,85 @@ import {
   MAT_DIALOG_DATA,
 } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { CenterService } from 'src/app/services/center.service';
-import { OfficeService } from 'src/app/services/office.service';
+import { TicketTypeService } from 'src/app/services/ticket-type.service';
 
 export interface DialogData {
-  officeId: number;
+  ticketTypeId: number;
   name: string;
-  mask: boolean;
-  centerId: number;
+  mark: string;
   action: string;
-  centers: any;
 }
 
 @Component({
-  selector: 'app-office',
-  templateUrl: './office.component.html',
-  styleUrls: ['./office.component.scss'],
+  selector: 'app-ticket-type',
+  templateUrl: './ticket-type.component.html',
+  styleUrls: ['./ticket-type.component.scss'],
 })
-export class OfficeComponent implements OnInit {
-  offices = [];
-  centers = [];
-  action: string | undefined;
+export class TicketTypeComponent implements OnInit {
+  ticketTypes = [];
+  ticketTypeId: number | undefined;
   name: string | undefined;
-  mask: boolean | undefined;
-  officeId: number | undefined;
-  centerId: number | undefined;
+  mark: string | undefined;
+  action: string | undefined;
 
-  displayedColumns: string[] = [
-    'officeId',
-    'name',
-    'mask',
-    'centerId',
-    'options',
-  ];
+  displayedColumns: string[] = ['ticketTypeId', 'name', 'mark', 'options'];
   constructor(
     public dialog: MatDialog,
-    private _officeSrv: OfficeService,
-    private _centerSrv: CenterService,
-    private _snackBar: MatSnackBar
+    private _snackBar: MatSnackBar,
+    private _ticketTypeSrv: TicketTypeService
   ) {}
 
   ngOnInit(): void {
-    this.getOffices();
-    this.getCenters();
+    this.getTicketTypes();
   }
 
-  getOffices() {
-    this._officeSrv.getOffices().subscribe((res) => {
-      this.offices = res;
+  getTicketTypes() {
+    this._ticketTypeSrv.getTicketTypes().subscribe((res) => {
+      this.ticketTypes = res;
     });
   }
 
-  getCenters() {
-    this._centerSrv.getCenters().subscribe((res) => {
-      this.centers = res;
-    });
-  }
-
-  addOffice(data: any) {
-    this.officeId = undefined;
+  addTicketType(data: any) {
+    this.ticketTypeId = undefined;
     this.name = undefined;
-    this.mask = undefined;
-    this.centerId = undefined;
+    this.mark = undefined;
     this.action = data.action;
     this.openDialog();
   }
-  editOffice(data: any) {
-    this.officeId = data.officeId;
+  editTicketType(data: any) {
+    this.ticketTypeId = data.ticketTypeId;
     this.name = data.name;
-    this.mask = data.mask;
-    this.centerId = data.centerId;
+    this.mark = data.mark;
     this.action = data.action;
     this.openDialog();
   }
-  deleteOffice(data: any) {
-    this.officeId = data.officeId;
+  deleteTicketType(data: any) {
+    this.ticketTypeId = data.ticketTypeId;
     this.action = data.action;
     this.openDialog();
   }
-
   openDialog() {
-    const dialogRef = this.dialog.open(OfficeDialogComponent, {
+    const dialogRef = this.dialog.open(TicketTypeDialogComponent, {
       width: '350px',
       data: {
-        officeId: this.officeId,
+        ticketTypeId: this.ticketTypeId,
         name: this.name,
-        mask: this.mask,
-        centerId: this.centerId,
+        mark: this.mark,
         action: this.action,
-        centers: this.centers,
       },
     });
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
         switch (result.action) {
           case 'add':
-            this._officeSrv
-              .addOffice({
+            this._ticketTypeSrv
+              .addTicketType({
                 name: result.name,
-                mask: result.mask,
-                centerId: result.centerId,
+                mark: result.mark,
               })
               .subscribe(
                 (res) => {
-                  this._snackBar.open('Gabinet został utworzony', '', {
+                  this._snackBar.open('Bilet został utworzony', '', {
                     duration: 5000,
                     verticalPosition: 'top',
                     horizontalPosition: 'right',
@@ -116,7 +91,7 @@ export class OfficeComponent implements OnInit {
                   });
                 },
                 (error) => {
-                  this._snackBar.open('Błąd podczas tworzenia gabinetu', '', {
+                  this._snackBar.open('Błąd podczas tworzenia biletu', '', {
                     duration: 5000,
                     verticalPosition: 'top',
                     horizontalPosition: 'right',
@@ -124,21 +99,20 @@ export class OfficeComponent implements OnInit {
                   });
                 },
                 () => {
-                  this.getOffices();
+                  this.getTicketTypes();
                 }
               );
             break;
           case 'edit':
-            this._officeSrv
-              .editOffice({
-                officeId: result.officeId,
+            this._ticketTypeSrv
+              .editTicketType({
+                ticketTypeId: result.ticketTypeId,
                 name: result.name,
-                mask: result.mask,
-                centerId: result.centerId,
+                mark: result.mark,
               })
               .subscribe(
                 (res) => {
-                  this._snackBar.open('Gabinet został edytowany', '', {
+                  this._snackBar.open('Bilet został edytowany', '', {
                     duration: 5000,
                     verticalPosition: 'top',
                     horizontalPosition: 'right',
@@ -146,7 +120,7 @@ export class OfficeComponent implements OnInit {
                   });
                 },
                 (error) => {
-                  this._snackBar.open('Błąd podczas edycji gabinetu', '', {
+                  this._snackBar.open('Błąd podczas edycji biletu', '', {
                     duration: 5000,
                     verticalPosition: 'top',
                     horizontalPosition: 'right',
@@ -154,16 +128,16 @@ export class OfficeComponent implements OnInit {
                   });
                 },
                 () => {
-                  this.getOffices();
+                  this.getTicketTypes();
                 }
               );
             break;
           case 'delete':
-            this._officeSrv
-              .deleteOffice({ officeId: result.officeId })
+            this._ticketTypeSrv
+              .deleteTicketType({ ticketTypeId: result.ticketTypeId })
               .subscribe(
                 (res) => {
-                  this._snackBar.open('Gabinet został usunięty', '', {
+                  this._snackBar.open('Bilet został usunięty', '', {
                     duration: 5000,
                     verticalPosition: 'top',
                     horizontalPosition: 'right',
@@ -171,7 +145,7 @@ export class OfficeComponent implements OnInit {
                   });
                 },
                 (error) => {
-                  this._snackBar.open('Błąd podczas usuwania gabinetu', '', {
+                  this._snackBar.open('Błąd podczas usuwania biletu', '', {
                     duration: 5000,
                     verticalPosition: 'top',
                     horizontalPosition: 'right',
@@ -179,7 +153,7 @@ export class OfficeComponent implements OnInit {
                   });
                 },
                 () => {
-                  this.getOffices();
+                  this.getTicketTypes();
                 }
               );
             break;
@@ -191,12 +165,12 @@ export class OfficeComponent implements OnInit {
 
 // Dialog Component
 @Component({
-  selector: 'app-office-dialog',
-  templateUrl: './office-dialog-component.html',
+  selector: 'app-ticket-type-dialog',
+  templateUrl: './ticket-type-dialog-component.html',
 })
-export class OfficeDialogComponent {
+export class TicketTypeDialogComponent {
   constructor(
-    public dialogRef: MatDialogRef<OfficeDialogComponent>,
+    public dialogRef: MatDialogRef<TicketTypeDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData
   ) {}
 

@@ -24,7 +24,7 @@ exports.createLab = (req, res) => {
   const centerId = req.body.centerId;
 
   pgClient
-    .query("INSERT INTO labs VALUES (DEFAULT, $1, $2, $3)", [name, description, centerId])
+    .query("INSERT INTO labs(lab_id, name, description, center_id) VALUES (DEFAULT, $1, $2, $3)", [name, description, centerId])
     .then((result) => {
       res.status(200).send(result.rows);
     })

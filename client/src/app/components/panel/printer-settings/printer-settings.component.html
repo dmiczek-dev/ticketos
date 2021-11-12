@@ -1,0 +1,66 @@
+<div class="mat-elevation-z1">
+  <button mat-raised-button class="primary-color-bg" routerLink="./utworz">
+    Dodaj ustawienia
+  </button>
+  <mat-table [dataSource]="printerSettings" class="mat-elevation-z8">
+    <!-- Counter Column -->
+    <ng-container matColumnDef="printerSettingId">
+      <mat-header-cell *matHeaderCellDef> Id </mat-header-cell>
+      <mat-cell *matCellDef="let element">{{
+        element.printerSettingId
+      }}</mat-cell>
+    </ng-container>
+    <!-- Title Column -->
+    <ng-container matColumnDef="title">
+      <mat-header-cell *matHeaderCellDef> Tytuł </mat-header-cell>
+      <mat-cell *matCellDef="let element">{{ element.title }}</mat-cell>
+    </ng-container>
+    <!-- Subtitle Column -->
+    <ng-container matColumnDef="subtitle">
+      <mat-header-cell *matHeaderCellDef> Podtytuł </mat-header-cell>
+      <mat-cell *matCellDef="let element">{{ element.subtitle }}</mat-cell>
+    </ng-container>
+    <!-- Statement Column -->
+    <ng-container matColumnDef="statement">
+      <mat-header-cell *matHeaderCellDef> Komunikat </mat-header-cell>
+      <mat-cell *matCellDef="let element">{{ element.statement }}</mat-cell>
+    </ng-container>
+    <!-- Center Column -->
+    <ng-container matColumnDef="centerId">
+      <mat-header-cell *matHeaderCellDef>
+        Podmiot medyczny (id)
+      </mat-header-cell>
+      <mat-cell *matCellDef="let element">{{ element.centerId }}</mat-cell>
+    </ng-container>
+    <!-- Options Column -->
+    <ng-container matColumnDef="options">
+      <mat-header-cell *matHeaderCellDef fxFlex="20"> Opcje </mat-header-cell>
+      <mat-cell *matCellDef="let element" fxFlex="20">
+        <button
+          mat-raised-button
+          class="warn-color-bg"
+          routerLink="./{{ element.printerSettingId }}"
+        >
+          Edytuj
+        </button>
+        <button
+          mat-raised-button
+          color="warn"
+          (click)="
+            deletePrinterSetting({
+              printerSettingId: element.printerSettingId,
+              title: element.title,
+              subtitle: element.subtitle,
+              statement: element.statement,
+              action: 'delete'
+            })
+          "
+        >
+          Usuń
+        </button>
+      </mat-cell>
+    </ng-container>
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+  </mat-table>
+</div>

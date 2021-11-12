@@ -1,0 +1,17 @@
+<h1 mat-dialog-title>Usuń ustawienia</h1>
+<div mat-dialog-content>
+  <p>Czy napewno chcesz usunąć wskazany element?</p>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">Anuluj</button>
+  <button
+    mat-button
+    [mat-dialog-close]="{
+      printerSettingId: data.printerSettingId
+    }"
+    cdkFocusInitial
+    color="primary"
+  >
+    Potwierdzam
+  </button>
+</div>

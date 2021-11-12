@@ -7,6 +7,9 @@ import { LabComponent } from './components/panel/lab/lab.component';
 import { LoginComponent } from './components/panel/login/login.component';
 import { OfficeConfigComponent } from './components/panel/office-config/office-config.component';
 import { OfficeComponent } from './components/panel/office/office.component';
+import { PrinterSettingCreateComponent } from './components/panel/printer-setting-create/printer-setting-create.component';
+import { PrinterSettingEditComponent } from './components/panel/printer-setting-edit/printer-setting-edit.component';
+import { PrinterSettingsComponent } from './components/panel/printer-settings/printer-settings.component';
 import { TicketTypeComponent } from './components/panel/ticket-type/ticket-type.component';
 import { PanelComponent } from './layouts/panel/panel.component';
 
@@ -37,6 +40,15 @@ const routes: Routes = [
       { path: 'gabinety/:id', component: OfficeConfigComponent },
       { path: 'rodzaje-biletow', component: TicketTypeComponent },
       { path: 'pracownie', component: LabComponent },
+      { path: 'ustawienia-wydruku', component: PrinterSettingsComponent },
+      {
+        path: 'ustawienia-wydruku/utworz',
+        component: PrinterSettingCreateComponent,
+      },
+      {
+        path: 'ustawienia-wydruku/:id',
+        component: PrinterSettingEditComponent,
+      },
     ],
   },
 ];

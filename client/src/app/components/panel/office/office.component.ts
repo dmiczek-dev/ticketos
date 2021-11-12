@@ -192,7 +192,7 @@ export class OfficeComponent implements OnInit {
 // Dialog Component
 @Component({
   selector: 'app-office-dialog',
-  templateUrl: './office-dialog-component.html',
+  templateUrl: './office-dialog.component.html',
 })
 export class OfficeDialogComponent {
   constructor(

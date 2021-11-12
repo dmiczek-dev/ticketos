@@ -164,7 +164,7 @@ export class CenterComponent implements OnInit {
 // Dialog Component
 @Component({
   selector: 'app-center-dialog',
-  templateUrl: './center-dialog-component.html',
+  templateUrl: './center-dialog.component.html',
 })
 export class CenterDialogComponent {
   constructor(

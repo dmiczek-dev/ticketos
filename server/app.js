@@ -10,6 +10,7 @@ const officeRoutes = require("./src/routes/office");
 const ticketTypeRoutes = require("./src/routes/ticket-type");
 const userRoutes = require("./src/routes/user");
 const labRoutes = require("./src/routes/lab");
+const printerSettingRoutes = require("./src/routes/printer-setting");
 
 dotenv.config();
 const app = express();
@@ -33,6 +34,7 @@ app.use("/api", officeRoutes);
 app.use("/api", ticketTypeRoutes);
 app.use("/api", userRoutes);
 app.use("/api", labRoutes);
+app.use("/api", printerSettingRoutes);
 
 const server = app.listen(process.env.PORT, () => {
   console.log("Server is up!");

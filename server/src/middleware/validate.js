@@ -289,3 +289,73 @@ exports.validateDeleteLab = function (req, res, next) {
   }
   next();
 };
+
+exports.validateCreatePrinterSetting = function (req, res, next) {
+  const body = req.body;
+
+  const schema = Joi.object().keys({
+    title: Joi.string(),
+    subtitle: Joi.string(),
+    statement: Joi.string(),
+    centerId: Joi.number().required(),
+  });
+
+  try {
+    const validation = schema.validate(body);
+    if (validation.error) {
+      return res.status(400).send({
+        status: "error",
+        message: "Invalid request data",
+      });
+    }
+  } catch (err) {
+    throw err;
+  }
+  next();
+};
+
+exports.validateEditPrinterSetting = function (req, res, next) {
+  const body = req.body;
+
+  const schema = Joi.object().keys({
+    printerSettingId: Joi.number().required(),
+    title: Joi.string(),
+    subtitle: Joi.string(),
+    statement: Joi.string(),
+    centerId: Joi.number().required(),
+  });
+
+  try {
+    const validation = schema.validate(body);
+    if (validation.error) {
+      return res.status(400).send({
+        status: "error",
+        message: "Invalid request data",
+      });
+    }
+  } catch (err) {
+    throw err;
+  }
+  next();
+};
+
+exports.validateDeletePrinterSetting = function (req, res, next) {
+  const body = req.body;
+
+  const schema = Joi.object().keys({
+    printerSettingId: Joi.number().required(),
+  });
+
+  try {
+    const validation = schema.validate(body);
+    if (validation.error) {
+      return res.status(400).send({
+        status: "error",
+        message: "Invalid request data",
+      });
+    }
+  } catch (err) {
+    throw err;
+  }
+  next();
+};

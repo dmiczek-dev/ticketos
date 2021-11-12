@@ -27,6 +27,12 @@ import {
   LabComponent,
   LabDialogComponent,
 } from '../components/panel/lab/lab.component';
+import {
+  PrinterSettingDialogComponent,
+  PrinterSettingsComponent,
+} from '../components/panel/printer-settings/printer-settings.component';
+import { PrinterSettingCreateComponent } from '../components/panel/printer-setting-create/printer-setting-create.component';
+import { PrinterSettingEditComponent } from '../components/panel/printer-setting-edit/printer-setting-edit.component';
 
 @NgModule({
   declarations: [
@@ -42,6 +48,10 @@ import {
     TicketTypeDialogComponent,
     LabComponent,
     LabDialogComponent,
+    PrinterSettingsComponent,
+    PrinterSettingDialogComponent,
+    PrinterSettingCreateComponent,
+    PrinterSettingEditComponent,
   ],
   imports: [
     CommonModule,

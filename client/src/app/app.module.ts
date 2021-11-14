@@ -8,6 +8,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AuthGuard } from './auth.guard';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { TokenService } from './services/token.service';
+import { PortableModule } from './modules/portable.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -15,6 +16,7 @@ import { TokenService } from './services/token.service';
     BrowserModule,
     AppRoutingModule,
     PanelModule,
+    PortableModule,
     BrowserAnimationsModule,
   ],
   providers: [

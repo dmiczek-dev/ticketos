@@ -6,10 +6,21 @@ import { FooterComponent } from '../shared/footer/footer.component';
 import { MaterialModule } from './material.module';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { RouterModule } from '@angular/router';
+import { KioskSidebarComponent } from '../shared/kiosk-sidebar/kiosk-sidebar.component';
 
 @NgModule({
-  declarations: [HeaderComponent, SidebarComponent, FooterComponent],
+  declarations: [
+    HeaderComponent,
+    SidebarComponent,
+    FooterComponent,
+    KioskSidebarComponent,
+  ],
   imports: [CommonModule, MaterialModule, FlexLayoutModule, RouterModule],
-  exports: [HeaderComponent, SidebarComponent, FooterComponent],
+  exports: [
+    HeaderComponent,
+    SidebarComponent,
+    FooterComponent,
+    KioskSidebarComponent,
+  ],
 })
 export class SharedModule {}

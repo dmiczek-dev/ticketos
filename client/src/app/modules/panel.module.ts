@@ -33,6 +33,7 @@ import {
 } from '../components/panel/printer-settings/printer-settings.component';
 import { PrinterSettingCreateComponent } from '../components/panel/printer-setting-create/printer-setting-create.component';
 import { PrinterSettingEditComponent } from '../components/panel/printer-setting-edit/printer-setting-edit.component';
+import { LiveTicketComponent } from '../components/panel/live-ticket/live-ticket.component';
 
 @NgModule({
   declarations: [
@@ -52,6 +53,7 @@ import { PrinterSettingEditComponent } from '../components/panel/printer-setting
     PrinterSettingDialogComponent,
     PrinterSettingCreateComponent,
     PrinterSettingEditComponent,
+    LiveTicketComponent,
   ],
   imports: [
     CommonModule,

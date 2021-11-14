@@ -1,0 +1,25 @@
+:host {
+  .mat-icon {
+    font-size: 64px !important;
+    width: 64px !important;
+    height: 64px !important;
+    color: var(--primary-color);
+    vertical-align: middle;
+    margin-right: 20px;
+  }
+  .profile-card {
+    text-align: center;
+    padding: 20px 20px 20px 20px;
+  }
+  mat-nav-list a {
+    color: var(--default-color);
+    font-size: 36px;
+    font-weight: 400;
+    height: 120px;
+  }
+}
+
+.system-title {
+  letter-spacing: 3px !important;
+  margin-bottom: 0px;
+}

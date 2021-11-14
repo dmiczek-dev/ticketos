@@ -4,6 +4,7 @@ import { AuthGuard } from './auth.guard';
 import { CenterComponent } from './components/panel/center/center.component';
 import { DashboardComponent } from './components/panel/dashboard/dashboard.component';
 import { LabComponent } from './components/panel/lab/lab.component';
+import { LiveTicketComponent } from './components/panel/live-ticket/live-ticket.component';
 import { LoginComponent } from './components/panel/login/login.component';
 import { OfficeConfigComponent } from './components/panel/office-config/office-config.component';
 import { OfficeComponent } from './components/panel/office/office.component';
@@ -11,6 +12,7 @@ import { PrinterSettingCreateComponent } from './components/panel/printer-settin
 import { PrinterSettingEditComponent } from './components/panel/printer-setting-edit/printer-setting-edit.component';
 import { PrinterSettingsComponent } from './components/panel/printer-settings/printer-settings.component';
 import { TicketTypeComponent } from './components/panel/ticket-type/ticket-type.component';
+import { KioskComponent } from './layouts/kiosk/kiosk.component';
 import { PanelComponent } from './layouts/panel/panel.component';
 
 const routes: Routes = [
@@ -49,8 +51,10 @@ const routes: Routes = [
         path: 'ustawienia-wydruku/:id',
         component: PrinterSettingEditComponent,
       },
+      { path: 'bilety-live', component: LiveTicketComponent },
     ],
   },
+  { path: 'kiosk', component: KioskComponent },
 ];
 
 @NgModule({

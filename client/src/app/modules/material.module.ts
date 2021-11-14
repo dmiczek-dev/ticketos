@@ -15,6 +15,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatTableModule } from '@angular/material/table';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatPaginatorModule } from '@angular/material/paginator';
 
 const materialModules = [
   MatSidenavModule,
@@ -32,6 +33,7 @@ const materialModules = [
   MatListModule,
   MatMenuModule,
   MatSnackBarModule,
+  MatPaginatorModule,
   CommonModule,
 ];
 

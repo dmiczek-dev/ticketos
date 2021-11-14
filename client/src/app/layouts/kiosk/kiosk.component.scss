@@ -1,0 +1,23 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+mat-drawer {
+  width: 400px;
+}
+
+mat-drawer-container {
+  height: 100%;
+}
+
+@media print {
+  mat-drawer {
+    display: none;
+  }
+
+  .mat-drawer-content {
+    margin-left: 0px !important;
+  }
+}

@@ -1,0 +1,24 @@
+<mat-nav-list>
+  <div class="profile-card">
+    <div class="header">
+      <img src="../../../../assets/images/ticketos_logo.png" width="100px" />
+    </div>
+    <h2 class="system-title">TicketOS</h2>
+  </div>
+  <mat-divider></mat-divider>
+  <a
+    mat-list-item
+    routerLink="./{{ centerShortcut }}/pobierz-bilet"
+    routerLinkActive="list-item-active"
+    ><mat-icon>receipt</mat-icon>Pobierz bilet</a
+  >
+  <mat-divider></mat-divider>
+  <!-- 
+  <a
+    *ngIf="isExtraOptions"
+    mat-list-item
+    routerLink="./bilet/{{ centerCode }}"
+    routerLinkActive="list-item-active"
+    ><mat-icon>queue_play_next</mat-icon>Rejestracja</a
+  > -->
+</mat-nav-list>

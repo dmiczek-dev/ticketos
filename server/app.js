@@ -11,6 +11,7 @@ const ticketTypeRoutes = require("./src/routes/ticket-type");
 const userRoutes = require("./src/routes/user");
 const labRoutes = require("./src/routes/lab");
 const printerSettingRoutes = require("./src/routes/printer-setting");
+const ticketRoutes = require("./src/routes/ticket");
 
 dotenv.config();
 const app = express();
@@ -35,6 +36,7 @@ app.use("/api", ticketTypeRoutes);
 app.use("/api", userRoutes);
 app.use("/api", labRoutes);
 app.use("/api", printerSettingRoutes);
+app.use("/api", ticketRoutes);
 
 const server = app.listen(process.env.PORT, () => {
   console.log("Server is up!");
@@ -43,6 +45,8 @@ const io = require("socket.io")(server, {
   pingInterval: 3000,
   pingTimeout: 7000,
 });
+
+module.exports = io;
 
 // Site hosting
 // app.use(express.static("public"));

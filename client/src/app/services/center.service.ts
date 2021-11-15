@@ -14,6 +14,10 @@ export class CenterService {
     return this.http.get<any>(this._ip + '/centers');
   }
 
+  getCenterById(id: number) {
+    return this.http.get<any>(this._ip + '/centers/' + id);
+  }
+
   addCenter(center: any) {
     return this.http.post<any>(this._ip + '/create-center', center);
   }

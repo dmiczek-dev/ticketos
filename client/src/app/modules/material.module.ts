@@ -16,6 +16,7 @@ import { MatTableModule } from '@angular/material/table';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatRippleModule } from '@angular/material/core';
 
 const materialModules = [
   MatSidenavModule,
@@ -34,6 +35,7 @@ const materialModules = [
   MatMenuModule,
   MatSnackBarModule,
   MatPaginatorModule,
+  MatRippleModule,
   CommonModule,
 ];
 

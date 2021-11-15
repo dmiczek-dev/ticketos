@@ -4,6 +4,7 @@ const logger = require("morgan");
 const { pgConnect } = require("./src/db/postgres");
 const cors = require("cors");
 
+//API
 const authRoutes = require("./src/routes/auth");
 const centerRoutes = require("./src/routes/center");
 const officeRoutes = require("./src/routes/office");
@@ -22,6 +23,18 @@ const corsOptions = {
   credentials: true,
 };
 
+const server = app.listen(process.env.PORT, () => {
+  console.log("Server is up!");
+});
+
+//Socket.io init
+global.io = require("socket.io")(server, {
+  cors: {
+    origin: "http://localhost:8080",
+    methods: ["GET", "POST"],
+  },
+});
+
 // Make connection to postgres database
 pgConnect();
 
@@ -37,16 +50,6 @@ app.use("/api", userRoutes);
 app.use("/api", labRoutes);
 app.use("/api", printerSettingRoutes);
 app.use("/api", ticketRoutes);
-
-const server = app.listen(process.env.PORT, () => {
-  console.log("Server is up!");
-});
-const io = require("socket.io")(server, {
-  pingInterval: 3000,
-  pingTimeout: 7000,
-});
-
-module.exports = io;
 
 // Site hosting
 // app.use(express.static("public"));

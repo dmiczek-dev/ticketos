@@ -49,4 +49,8 @@ export class TicketTypeService {
       data
     );
   }
+
+  getTicketTypesByCenterId(id: number) {
+    return this.http.get<any>(this._ip + '/ticket-types-by-center/' + id);
+  }
 }

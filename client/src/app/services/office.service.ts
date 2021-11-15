@@ -14,6 +14,10 @@ export class OfficeService {
     return this.http.get<any>(this._ip + '/offices');
   }
 
+  getOfficeById(id: number) {
+    return this.http.get<any>(this._ip + '/offices/' + id);
+  }
+
   addOffice(office: any) {
     return this.http.post<any>(this._ip + '/create-office', office);
   }

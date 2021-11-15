@@ -13,4 +13,12 @@ export class TicketService {
   getLiveTickets() {
     return this.http.get<any>(this._ip + '/live-tickets');
   }
+
+  createTicket(ticket: any) {
+    return this.http.post<any>(this._ip + '/create-ticket', ticket);
+  }
+
+  getNewestTicketsForCenter(center: any) {
+    return this.http.post<any>(this._ip + '/newest-tickets-for-center', center);
+  }
 }

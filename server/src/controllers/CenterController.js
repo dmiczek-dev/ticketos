@@ -17,12 +17,12 @@ exports.getCenters = (req, res) => {
     });
 };
 
-exports.getCenterByShortcut = (req, res) => {
+exports.getCenterById = (req, res) => {
   const pgClient = getClient();
-  const shortcut = req.params.shortcut;
+  const centerId = req.params.id;
 
   pgClient
-    .query('SELECT center_id AS "centerId", name, active, shortcut FROM centers WHERE shortcut ilike $1', [shortcut])
+    .query('SELECT center_id AS "centerId", name, shortcut FROM centers WHERE center_id = $1', [centerId])
     .then((result) => {
       res.status(200).send(result.rows);
     })

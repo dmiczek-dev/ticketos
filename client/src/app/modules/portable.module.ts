@@ -7,9 +7,16 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { RouterModule } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 import { KioskComponent } from '../layouts/kiosk/kiosk.component';
+import { PrintSectionDirective } from '../directives/print-section.directive';
+import { RegisterPanelComponent } from '../components/portable/register-panel/register-panel.component';
 
 @NgModule({
-  declarations: [KioskComponent, TicketComponent],
+  declarations: [
+    KioskComponent,
+    TicketComponent,
+    PrintSectionDirective,
+    RegisterPanelComponent,
+  ],
   imports: [
     CommonModule,
     MaterialModule,

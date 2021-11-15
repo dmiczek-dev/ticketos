@@ -1,0 +1,48 @@
+<div fxLayout="column" fxLayoutAlign="space-between" fxFill>
+  <div>
+    <mat-toolbar>
+      <mat-toolbar-row>
+        <div fxFlex fxLayoutAlign="start">
+          <span class="header"> {{ office.name }} </span>
+        </div>
+
+        <div fxFlex fxLayoutAlign="end">
+          <span class="timer digits">{{ today | date: "H:mm:ss" }}</span>
+        </div>
+      </mat-toolbar-row>
+    </mat-toolbar>
+  </div>
+  <div>
+    <mat-list role="list">
+      <div
+        matRipple
+        [matRippleCentered]="false"
+        [matRippleDisabled]="false"
+        [matRippleUnbounded]="false"
+        *ngFor="let ticket of tickets"
+      >
+        <mat-list-item role="listitem" (click)="confirm(ticket)">
+          <div fxFlex fxLayout="row" fxLayoutAlign="start">
+            <p class="ticket-number">
+              {{ ticket.number + ticket.mark }}
+            </p>
+          </div>
+
+          <div fxFlex fxLayout="row" fxLayoutAlign="center">
+            <p class="ticket-name">
+              {{ " (" + ticket.name + ")" }}
+            </p>
+          </div>
+
+          <div fxFlex fxLayout="row" fxLayoutAlign="end">
+            <p class="print-time">
+              {{ ticket.printDate | date: "H:mm:ss" }}
+            </p>
+          </div></mat-list-item
+        >
+        <mat-divider></mat-divider>
+      </div>
+    </mat-list>
+  </div>
+  <div>Footer</div>
+</div>

@@ -5,6 +5,7 @@ const { authenticate } = require("../middleware/authenticate");
 const router = express.Router();
 
 router.get("/ticket-types", TicketTypeController.getTicketTypes);
+router.get("/ticket-types-by-center/:centerId", TicketTypeController.getTicketTypesByCenterId);
 router.post("/create-ticket-type", [authenticate, validateCreateTicketType, TicketTypeController.createTicketType]);
 router.post("/edit-ticket-type", [authenticate, validateEditTicketType, TicketTypeController.editTicketType]);
 router.post("/delete-ticket-type", [authenticate, validateDeleteTicketType, TicketTypeController.deleteTicketType]);

@@ -40,4 +40,8 @@ export class PrinterSettingService {
       printerSetting
     );
   }
+
+  getPrinterSettingByCenterId(id: number) {
+    return this.http.get<any>(this._ip + '/printer-settings-by-center/' + id);
+  }
 }

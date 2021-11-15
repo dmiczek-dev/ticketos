@@ -12,6 +12,8 @@ import { PrinterSettingCreateComponent } from './components/panel/printer-settin
 import { PrinterSettingEditComponent } from './components/panel/printer-setting-edit/printer-setting-edit.component';
 import { PrinterSettingsComponent } from './components/panel/printer-settings/printer-settings.component';
 import { TicketTypeComponent } from './components/panel/ticket-type/ticket-type.component';
+import { RegisterPanelComponent } from './components/portable/register-panel/register-panel.component';
+import { TicketComponent } from './components/portable/ticket/ticket.component';
 import { KioskComponent } from './layouts/kiosk/kiosk.component';
 import { PanelComponent } from './layouts/panel/panel.component';
 
@@ -54,7 +56,25 @@ const routes: Routes = [
       { path: 'bilety-live', component: LiveTicketComponent },
     ],
   },
-  { path: 'kiosk', component: KioskComponent },
+  {
+    path: 'kiosk/:centerId',
+    component: KioskComponent,
+    children: [
+      {
+        path: 'pobierz-bilet',
+        component: TicketComponent,
+      },
+    ],
+  },
+  {
+    path: 'widok',
+    children: [
+      {
+        path: 'panel-rejestracja/:officeId',
+        component: RegisterPanelComponent,
+      },
+    ],
+  },
 ];
 
 @NgModule({

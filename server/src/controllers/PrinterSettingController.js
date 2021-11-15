@@ -38,6 +38,27 @@ exports.getPrinterSettingById = (req, res) => {
     });
 };
 
+exports.getPrinterSettingByCenterId = (req, res) => {
+  const pgClient = getClient();
+  centerId = req.params["centerId"];
+
+  pgClient
+    .query(
+      'SELECT printer_setting_id AS "printerSettingId", title, subtitle, statement, center_id AS "centerId" FROM printer_settings WHERE center_id = $1',
+      [centerId]
+    )
+    .then((result) => {
+      res.status(200).send(result.rows);
+    })
+    .catch((err) => {
+      res.status(500).send({
+        message: "Cannot GET printer setting from DB",
+        detailed_message: err,
+      });
+      console.error(err);
+    });
+};
+
 exports.createPrinterSetting = (req, res) => {
   const pgClient = getClient();
   const title = req.body.title;

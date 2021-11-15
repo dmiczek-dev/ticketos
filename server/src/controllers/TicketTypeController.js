@@ -19,6 +19,27 @@ exports.getTicketTypes = (req, res) => {
     });
 };
 
+exports.getTicketTypesByCenterId = (req, res) => {
+  const pgClient = getClient();
+  const centerId = req.params["centerId"];
+
+  pgClient
+    .query(
+      'SELECT ticket_type_id AS "ticketTypeId", name, mark FROM ticket_types WHERE ticket_type_id IN (SELECT ticket_type_id FROM office_ticket_types WHERE office_id IN (SELECT office_id FROM offices WHERE center_id = $1))',
+      [centerId]
+    )
+    .then((result) => {
+      res.status(200).send(result.rows);
+    })
+    .catch((err) => {
+      res.status(500).send({
+        message: "Cannot GET ticket types from DB",
+        detailed_message: err,
+      });
+      console.error(err);
+    });
+};
+
 exports.getTicketTypeById = (req, res) => {
   const pgClient = getClient();
   const ticketTypeId = req.params.ticketTypeId;
@@ -125,7 +146,6 @@ exports.getPinnedTicketTypesByOfficeId = (req, res) => {
       [officeId]
     )
     .then((result) => {
-      console.log(result.rows);
       res.status(200).send(result.rows);
     })
     .catch((err) => {
@@ -190,10 +210,6 @@ exports.optimizeSequence = (req, res) => {
   const sequence = req.body.sequence;
   const prevSequence = req.body.prevSequence;
 
-  console.log(req.body);
-
-  console.log("Teraz: " + sequence);
-  console.log("Poprzedmio: " + prevSequence);
   //Fix other records sequence before update
   if (prevSequence < sequence) {
     pgClient

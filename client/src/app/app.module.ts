@@ -9,6 +9,7 @@ import { AuthGuard } from './auth.guard';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { TokenService } from './services/token.service';
 import { PortableModule } from './modules/portable.module';
+import { TicketService } from './services/ticket.service';
 
 @NgModule({
   declarations: [AppComponent],

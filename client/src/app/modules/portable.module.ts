@@ -8,7 +8,11 @@ import { RouterModule } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 import { KioskComponent } from '../layouts/kiosk/kiosk.component';
 import { PrintSectionDirective } from '../directives/print-section.directive';
-import { RegisterPanelComponent } from '../components/portable/register-panel/register-panel.component';
+import {
+  ConfirmDialogComponent,
+  RegisterPanelComponent,
+} from '../components/portable/register-panel/register-panel.component';
+import { TicketService } from '../services/ticket.service';
 
 @NgModule({
   declarations: [
@@ -16,6 +20,7 @@ import { RegisterPanelComponent } from '../components/portable/register-panel/re
     TicketComponent,
     PrintSectionDirective,
     RegisterPanelComponent,
+    ConfirmDialogComponent,
   ],
   imports: [
     CommonModule,

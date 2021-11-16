@@ -12,14 +12,14 @@
       </mat-toolbar-row>
     </mat-toolbar>
   </div>
-  <div>
+  <div fxFlexAlign="center" class="ticket-list">
     <mat-list role="list">
       <div
         matRipple
         [matRippleCentered]="false"
         [matRippleDisabled]="false"
         [matRippleUnbounded]="false"
-        *ngFor="let ticket of tickets"
+        *ngFor="let ticket of tickets$ | async"
       >
         <mat-list-item role="listitem" (click)="confirm(ticket)">
           <div fxFlex fxLayout="row" fxLayoutAlign="start">
@@ -44,5 +44,13 @@
       </div>
     </mat-list>
   </div>
-  <div>Footer</div>
+  <div>
+    <mat-toolbar>
+      <mat-toolbar-row>
+        <div fxFlex fxLayoutAlign="center">
+          <span class="footer">Bilety w kolejce do rejestracji</span>
+        </div>
+      </mat-toolbar-row>
+    </mat-toolbar>
+  </div>
 </div>

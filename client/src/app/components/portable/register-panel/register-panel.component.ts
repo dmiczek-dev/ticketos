@@ -1,8 +1,23 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
+import {
+  MatDialog,
+  MatDialogRef,
+  MAT_DIALOG_DATA,
+} from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute } from '@angular/router';
+import { Observable } from 'rxjs';
 import { OfficeService } from 'src/app/services/office.service';
 import { TicketTypeService } from 'src/app/services/ticket-type.service';
 import { TicketService } from 'src/app/services/ticket.service';
+
+export interface DialogData {
+  ticketId: number;
+  ticketTypeId: number;
+  ticketTypes: any;
+  number: number;
+  mark: string;
+}
 
 @Component({
   selector: 'app-register-panel',
@@ -13,13 +28,15 @@ export class RegisterPanelComponent implements OnInit, OnDestroy {
   today: Date | undefined;
   timerInterval: any;
   ticketTypes: any[] = [];
-  tickets: any[] = [];
+  tickets$: Observable<any[]>;
   office: any;
   constructor(
     private _ticketTypeSrv: TicketTypeService,
     private _officeSrv: OfficeService,
     private _ticketSrv: TicketService,
-    private _route: ActivatedRoute
+    private _route: ActivatedRoute,
+    public dialog: MatDialog,
+    private _snackBar: MatSnackBar
   ) {}
 
   ngOnInit(): void {
@@ -31,6 +48,12 @@ export class RegisterPanelComponent implements OnInit, OnDestroy {
 
     this.getTicketTypes();
     this.getOfficeById();
+
+    this._ticketSrv.filterByGenreObservable.subscribe((dataSub) => {
+      console.log('register!');
+
+      console.log(dataSub);
+    });
   }
 
   ngOnDestroy(): void {
@@ -39,7 +62,9 @@ export class RegisterPanelComponent implements OnInit, OnDestroy {
 
   //TODO: Optional, get ticket types based on center
   getTicketTypes() {
-    this._ticketTypeSrv.getTicketTypes();
+    this._ticketTypeSrv.getTicketTypes().subscribe((res) => {
+      this.ticketTypes = res;
+    });
   }
 
   getOfficeById() {
@@ -60,15 +85,104 @@ export class RegisterPanelComponent implements OnInit, OnDestroy {
         }
       );
   }
-
   getNewestTicketsForCenter() {
-    this._ticketSrv
-      .getNewestTicketsForCenter({ centerId: this.office.centerId })
-      .subscribe((res) => {
-        this.tickets = res;
-        console.log(this.tickets);
-      });
+    this.tickets$ = this._ticketSrv.getNewestTicketsForCenter({
+      centerId: this.office.centerId,
+    });
+    console.log(this.tickets$);
   }
 
-  confirm(ticket: any) {}
+  // getNewestTicketsForCenter() {
+  //   this._ticketSrv
+  //     .getNewestTicketsForCenter({ centerId: this.office.centerId })
+  //     .subscribe((res) => {
+  //       console.log(res);
+  //     });
+  // }
+
+  confirm(ticket: any) {
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      width: '350px',
+      data: {
+        ticketId: ticket.ticketId,
+        ticketTypeId: ticket.ticketTypeId,
+        ticketTypes: this.ticketTypes,
+        number: ticket.number,
+        mark: ticket.mark,
+      },
+    });
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        switch (result.action) {
+          case 'confirm':
+            this._ticketSrv
+              .confirmTicket({
+                ticketId: result.ticketId,
+                ticketTypeId: result.ticketTypeId,
+              })
+              .subscribe(
+                (res) => {
+                  this._snackBar.open('Bilet został potwierdzony', '', {
+                    duration: 5000,
+                    verticalPosition: 'top',
+                    horizontalPosition: 'right',
+                    panelClass: ['green-snackbar'],
+                  });
+                },
+                (error) => {
+                  this._snackBar.open('Błąd podczas autoryzacji biletu', '', {
+                    duration: 5000,
+                    verticalPosition: 'top',
+                    horizontalPosition: 'right',
+                    panelClass: ['red-snackbar'],
+                  });
+                },
+                () => {
+                  this.getNewestTicketsForCenter();
+                }
+              );
+            break;
+          case 'delete':
+            this._ticketSrv
+              .deleteTicket({
+                ticketId: result.ticketId,
+              })
+              .subscribe(
+                (res) => {
+                  this._snackBar.open('Bilet został usunięty', '', {
+                    duration: 5000,
+                    verticalPosition: 'top',
+                    horizontalPosition: 'right',
+                    panelClass: ['green-snackbar'],
+                  });
+                },
+                (error) => {
+                  this._snackBar.open('Błąd podczas usuwania biletu', '', {
+                    duration: 5000,
+                    verticalPosition: 'top',
+                    horizontalPosition: 'right',
+                    panelClass: ['red-snackbar'],
+                  });
+                },
+                () => {
+                  this.getNewestTicketsForCenter();
+                }
+              );
+            break;
+        }
+      }
+    });
+  }
+}
+
+// Dialog Component
+@Component({
+  selector: 'app-confirm-dialog',
+  templateUrl: './confirm-dialog.component.html',
+})
+export class ConfirmDialogComponent {
+  constructor(
+    public dialogRef: MatDialogRef<ConfirmDialogComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: DialogData
+  ) {}
 }

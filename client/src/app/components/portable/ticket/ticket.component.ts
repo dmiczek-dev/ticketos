@@ -1,5 +1,4 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import { CenterService } from 'src/app/services/center.service';
 import { PrinterSettingService } from 'src/app/services/printer-setting.service';
 import { TicketTypeService } from 'src/app/services/ticket-type.service';
 import { ActivationEnd, Router } from '@angular/router';
@@ -29,7 +28,6 @@ export class TicketComponent implements OnInit {
       if (val instanceof ActivationEnd) {
         if (val.snapshot.params.centerId !== undefined) {
           this.centerId = val.snapshot.params.centerId;
-          console.log(this.centerId);
         }
       }
     });
@@ -57,6 +55,7 @@ export class TicketComponent implements OnInit {
   }
 
   print(ticketType: any) {
+    this._ticketSrv.filterByGenre = ['this.options', 'test'];
     this._ticketSrv
       .createTicket({
         ticketTypeId: ticketType.ticketTypeId,

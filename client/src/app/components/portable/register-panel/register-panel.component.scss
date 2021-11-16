@@ -1,0 +1,65 @@
+@font-face {
+  font-family: contm;
+  src: url(../../../../assets/fonts/contm.eot),
+    url(../../../../assets/fonts/contm.eot#iefix) format("embedded-opentype"),
+    url(../../../../assets/fonts/contm.ttf) format("truetype"),
+    url(../../../../assets/fonts/contm.woff) format("woff"),
+    url(../../../../assets/fonts/contm.svg#contm) format("svg");
+  font-weight: 400;
+  font-style: normal;
+}
+
+.digits {
+  font-family: contm;
+}
+
+.mat-toolbar {
+  min-height: 100px !important;
+  background-color: var(--primary-color);
+  color: #ffffff;
+}
+
+.mat-toolbar-row {
+  min-height: 100px !important;
+}
+
+.timer {
+  font-size: 48px;
+  font-weight: 700;
+}
+
+.header {
+  font-size: 48px;
+  font-weight: 700;
+}
+
+.footer {
+  font-size: 48px;
+  font-weight: 700;
+}
+
+.mat-ripple:hover {
+  cursor: pointer;
+}
+
+.ticket-number {
+  font-size: 24px;
+}
+
+.ticket-name {
+  font-size: 18px;
+  color: #828da6;
+}
+
+.ticket-list {
+  min-width: 40%;
+  border: 1px dashed #828da6;
+}
+
+.mat-list-base {
+  padding-top: 0px;
+}
+
+.mat-list-item {
+  padding-top: 8px !important;
+}

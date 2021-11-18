@@ -53,7 +53,6 @@
 
 .ticket-list {
   min-width: 40%;
-  border: 2px dashed #828da6;
 }
 
 .mat-list-base {
@@ -62,4 +61,42 @@
 
 .mat-list-item {
   padding-top: 8px !important;
+}
+
+//Box z biletem
+.active-ticket-box {
+  border: 2px dashed #828da6;
+  font-size: 64px;
+  min-height: 100px;
+  line-height: 100px;
+  text-align: center;
+}
+
+//Przyciski
+button {
+  height: 100px;
+}
+
+@media screen and (max-width: 1920px) {
+  button {
+    font-size: 48px;
+  }
+}
+
+@media screen and (max-width: 1440px) {
+  button {
+    font-size: 30px;
+  }
+}
+
+@media screen and (max-width: 992px) {
+  button {
+    font-size: 22px;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  button {
+    font-size: 12px;
+  }
 }

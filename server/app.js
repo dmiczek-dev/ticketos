@@ -1,5 +1,11 @@
-const dotenv = require("dotenv");
+//Server and socket.io
 const express = require("express");
+const app = express();
+const http = require("http");
+const server = http.createServer(app);
+const { Server, Socket } = require("socket.io");
+//Database and config
+const dotenv = require("dotenv");
 const logger = require("morgan");
 const { pgConnect } = require("./src/db/postgres");
 const cors = require("cors");
@@ -13,9 +19,7 @@ const userRoutes = require("./src/routes/user");
 const labRoutes = require("./src/routes/lab");
 const printerSettingRoutes = require("./src/routes/printer-setting");
 const ticketRoutes = require("./src/routes/ticket");
-
 dotenv.config();
-const app = express();
 
 const corsOptions = {
   origin: process.env.CORS_ORIGIN,
@@ -23,16 +27,16 @@ const corsOptions = {
   credentials: true,
 };
 
-const server = app.listen(process.env.PORT, () => {
-  console.log("Server is up!");
-});
-
-//Socket.io init
-global.io = require("socket.io")(server, {
+// Socket.io init
+global.io = new Server(server, {
   cors: {
-    origin: "http://localhost:8080",
+    origin: process.env.CORS_ORIGIN,
     methods: ["GET", "POST"],
   },
+});
+
+server.listen(process.env.PORT, () => {
+  console.log("Server is up!");
 });
 
 // Make connection to postgres database

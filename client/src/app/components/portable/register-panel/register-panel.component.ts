@@ -1,4 +1,10 @@
-import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  Inject,
+  OnDestroy,
+  OnInit,
+} from '@angular/core';
 import {
   MatDialog,
   MatDialogRef,
@@ -10,6 +16,8 @@ import { Observable } from 'rxjs';
 import { OfficeService } from 'src/app/services/office.service';
 import { TicketTypeService } from 'src/app/services/ticket-type.service';
 import { TicketService } from 'src/app/services/ticket.service';
+import io from 'socket.io-client';
+import { environment } from 'src/environments/environment';
 
 export interface DialogData {
   ticketId: number;
@@ -24,12 +32,16 @@ export interface DialogData {
   templateUrl: './register-panel.component.html',
   styleUrls: ['./register-panel.component.scss'],
 })
-export class RegisterPanelComponent implements OnInit, OnDestroy {
+export class RegisterPanelComponent
+  implements OnInit, OnDestroy, AfterViewInit
+{
   today: Date | undefined;
   timerInterval: any;
   ticketTypes: any[] = [];
   tickets$: Observable<any[]>;
   office: any;
+  private socket: any;
+
   constructor(
     private _ticketTypeSrv: TicketTypeService,
     private _officeSrv: OfficeService,
@@ -40,6 +52,7 @@ export class RegisterPanelComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
+    this.socket = io(environment.socket_address);
     this.timerInterval = setInterval(() => {
       this.today = new Date();
     }, 1000);
@@ -48,16 +61,16 @@ export class RegisterPanelComponent implements OnInit, OnDestroy {
 
     this.getTicketTypes();
     this.getOfficeById();
-
-    this._ticketSrv.filterByGenreObservable.subscribe((dataSub) => {
-      console.log('register!');
-
-      console.log(dataSub);
-    });
   }
 
   ngOnDestroy(): void {
     clearInterval(this.timerInterval);
+  }
+
+  ngAfterViewInit(): void {
+    this.socket.on('newTicketAppear', () => {
+      this.getNewestTicketsForCenter();
+    });
   }
 
   //TODO: Optional, get ticket types based on center
@@ -91,14 +104,6 @@ export class RegisterPanelComponent implements OnInit, OnDestroy {
     });
     console.log(this.tickets$);
   }
-
-  // getNewestTicketsForCenter() {
-  //   this._ticketSrv
-  //     .getNewestTicketsForCenter({ centerId: this.office.centerId })
-  //     .subscribe((res) => {
-  //       console.log(res);
-  //     });
-  // }
 
   confirm(ticket: any) {
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {

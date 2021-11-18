@@ -1,0 +1,106 @@
+<div fxLayout="column" fxLayoutAlign="space-between" fxFill>
+  <div>
+    <mat-toolbar>
+      <mat-toolbar-row>
+        <div fxFlex fxLayoutAlign="start">
+          <span class="header"> {{ office.name }} </span>
+        </div>
+
+        <div fxFlex fxLayoutAlign="end">
+          <span class="timer digits">{{ today | date: "H:mm:ss" }}</span>
+        </div>
+      </mat-toolbar-row>
+    </mat-toolbar>
+  </div>
+  <div fxLayout="row" fxLayoutAlign="space-around" fxLayoutGap="20px">
+    <div
+      fxLayout="column"
+      fxLayoutAlign="center"
+      fxLayoutGap="20px"
+      fxFlex="65"
+      fxFlexOffset="20px"
+    >
+      <div class="active-ticket-box digits">
+        {{ activeTicket == null ? "PRZERWA" : activeTicket }}
+      </div>
+      <div fxLayout="row" fxLayoutGap="20px">
+        <button
+          mat-raised-button
+          class="error-color-bg"
+          fxFlex="50"
+          (click)="recall()"
+        >
+          Ponów
+        </button>
+        <button
+          mat-raised-button
+          class="primary-color-bg"
+          fxFlex="50"
+          (click)="pushCurrent()"
+        >
+          Następny
+        </button>
+      </div>
+
+      <div fxLayout="row" fxLayoutGap="20px">
+        <button
+          mat-raised-button
+          class="warn-color-bg"
+          fxFlex="50"
+          (click)="break()"
+        >
+          Przerwa
+        </button>
+        <button
+          mat-raised-button
+          class="grey-color-bg"
+          fxFlex="50"
+          (click)="missing()"
+        >
+          Brak pacjenta
+        </button>
+      </div>
+    </div>
+    <div class="ticket-list" style="padding-right: 20px">
+      <mat-list role="list">
+        <div
+          matRipple
+          [matRippleCentered]="false"
+          [matRippleDisabled]="false"
+          [matRippleUnbounded]="false"
+          *ngFor="let ticket of tickets$ | async"
+        >
+          <mat-list-item role="listitem" (click)="selectTicket(ticket)">
+            <div fxFlex fxLayout="row" fxLayoutAlign="start">
+              <p class="ticket-number">
+                {{ ticket.number + ticket.mark }}
+              </p>
+            </div>
+
+            <div fxFlex fxLayout="row" fxLayoutAlign="center">
+              <p class="ticket-name">
+                {{ " (" + ticket.name + ")" }}
+              </p>
+            </div>
+
+            <div fxFlex fxLayout="row" fxLayoutAlign="end">
+              <p class="print-time">
+                {{ ticket.printDate | date: "H:mm:ss" }}
+              </p>
+            </div></mat-list-item
+          >
+          <mat-divider></mat-divider>
+        </div>
+      </mat-list>
+    </div>
+  </div>
+  <div>
+    <mat-toolbar>
+      <mat-toolbar-row>
+        <div fxFlex fxLayoutAlign="center">
+          <span class="footer">Bilety w kolejce do gabinetu</span>
+        </div>
+      </mat-toolbar-row>
+    </mat-toolbar>
+  </div>
+</div>

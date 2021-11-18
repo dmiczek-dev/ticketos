@@ -13,6 +13,8 @@ import {
   RegisterPanelComponent,
 } from '../components/portable/register-panel/register-panel.component';
 import { TicketService } from '../services/ticket.service';
+import { OfficePanelComponent } from '../components/portable/office-panel/office-panel.component';
+import { OfficeViewComponent } from '../components/portable/office-view/office-view.component';
 
 @NgModule({
   declarations: [
@@ -21,6 +23,8 @@ import { TicketService } from '../services/ticket.service';
     PrintSectionDirective,
     RegisterPanelComponent,
     ConfirmDialogComponent,
+    OfficePanelComponent,
+    OfficeViewComponent,
   ],
   imports: [
     CommonModule,

@@ -16,6 +16,7 @@ export class TicketComponent implements OnInit {
   next: string | undefined;
   centerId: any;
   timerInterval: any;
+  message: string;
 
   constructor(
     private _ticketTypeSrv: TicketTypeService,
@@ -55,7 +56,6 @@ export class TicketComponent implements OnInit {
   }
 
   print(ticketType: any) {
-    this._ticketSrv.filterByGenre = ['this.options', 'test'];
     this._ticketSrv
       .createTicket({
         ticketTypeId: ticketType.ticketTypeId,

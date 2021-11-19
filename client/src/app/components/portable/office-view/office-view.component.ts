@@ -3,6 +3,8 @@ import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
 import { OfficeService } from 'src/app/services/office.service';
 import { TicketService } from 'src/app/services/ticket.service';
+import io from 'socket.io-client';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-office-view',
@@ -14,6 +16,8 @@ export class OfficeViewComponent implements OnInit, OnDestroy {
   timerInterval: any;
   ticket: any;
   office: any;
+  private socket: any;
+
   constructor(
     private _officeSrv: OfficeService,
     private _ticketSrv: TicketService,
@@ -21,6 +25,7 @@ export class OfficeViewComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
+    this.socket = io(environment.socket_address);
     this.timerInterval = setInterval(() => {
       this.today = new Date();
     }, 1000);
@@ -31,6 +36,12 @@ export class OfficeViewComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     clearInterval(this.timerInterval);
+  }
+
+  ngAfterViewInit(): void {
+    this.socket.on('reloadCalledTickets', () => {
+      this.getCalledTicketForOffice();
+    });
   }
 
   getOfficeById() {

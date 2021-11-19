@@ -29,7 +29,7 @@ exports.createTicket = (req, res) => {
     )
     .then((result) => {
       res.status(200).send(result.rows);
-      io.emit("newTicketAppear");
+      io.emit("reloadNewestTickets");
     })
     .catch((err) => {
       res.status(500).send({
@@ -70,7 +70,8 @@ exports.confirmTicket = (req, res) => {
     .query("UPDATE tickets SET ticket_type_id = $1, confirm_date = now() WHERE ticket_id = $2", [ticketTypeId, ticketId])
     .then((result) => {
       res.status(200).send(result.rows);
-      io.emit("newConfirmedTicketAppear");
+      io.emit("reloadNewestTickets");
+      io.emit("reloadConfirmedTickets");
     })
     .catch((err) => {
       res.status(500).send({
@@ -89,6 +90,7 @@ exports.deleteTicket = (req, res) => {
     .query("DELETE FROM tickets WHERE ticket_id = $1", [ticketId])
     .then((result) => {
       res.status(200).send(result.rows);
+      io.emit("reloadCalledTickets");
     })
     .catch((err) => {
       res.status(500).send({
@@ -120,15 +122,17 @@ exports.getConfirmedTicketsForCenter = (req, res) => {
     });
 };
 
-//Requires officeId too
 exports.callTicket = (req, res) => {
   const pgClient = getClient();
   const ticketId = req.body.ticketId;
+  const officeId = req.body.officeId;
 
   pgClient
-    .query("UPDATE tickets SET call_date = now() WHERE ticket_id = $1", [ticketId])
+    .query("UPDATE tickets SET call_date = now(), office_id = $1 WHERE ticket_id = $2", [officeId, ticketId])
     .then((result) => {
       res.status(200).send(result.rows);
+      io.emit("reloadConfirmedTickets");
+      io.emit("reloadCalledTickets");
     })
     .catch((err) => {
       res.status(500).send({
@@ -147,6 +151,26 @@ exports.serviceTicket = (req, res) => {
     .query("UPDATE tickets SET service_date = now() WHERE ticket_id = $1", [ticketId])
     .then((result) => {
       res.status(200).send(result.rows);
+      io.emit("reloadCalledTickets");
+    })
+    .catch((err) => {
+      res.status(500).send({
+        message: "Cannot UPDATE ticket in DB",
+        detailed_message: err,
+      });
+      console.error(err);
+    });
+};
+
+exports.serviceTicketAndBreak = (req, res) => {
+  const pgClient = getClient();
+  const ticketId = req.body.ticketId;
+
+  pgClient
+    .query("UPDATE tickets SET service_date = now() WHERE ticket_id = $1", [ticketId])
+    .then((result) => {
+      res.status(200).send(result.rows);
+      io.emit("reloadCalledTickets");
     })
     .catch((err) => {
       res.status(500).send({

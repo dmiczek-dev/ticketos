@@ -49,4 +49,8 @@ export class TicketService {
   serviceTicket(ticket: any) {
     return this.http.post<any>(this._ip + '/service-ticket', ticket);
   }
+
+  serviceTicketAndBreak(ticket: any) {
+    return this.http.post<any>(this._ip + '/service-ticket-and-break', ticket);
+  }
 }

@@ -68,7 +68,7 @@ export class RegisterPanelComponent
   }
 
   ngAfterViewInit(): void {
-    this.socket.on('newTicketAppear', () => {
+    this.socket.on('reloadNewestTickets', () => {
       this.getNewestTicketsForCenter();
     });
   }
@@ -102,7 +102,6 @@ export class RegisterPanelComponent
     this.tickets$ = this._ticketSrv.getNewestTicketsForCenter({
       centerId: this.office.centerId,
     });
-    console.log(this.tickets$);
   }
 
   confirm(ticket: any) {

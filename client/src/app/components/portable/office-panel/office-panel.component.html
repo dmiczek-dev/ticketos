@@ -36,7 +36,7 @@
           mat-raised-button
           class="primary-color-bg"
           fxFlex="50"
-          (click)="pushCurrent()"
+          (click)="nextTicket()"
         >
           Następny
         </button>
@@ -68,7 +68,7 @@
           [matRippleCentered]="false"
           [matRippleDisabled]="false"
           [matRippleUnbounded]="false"
-          *ngFor="let ticket of tickets$ | async"
+          *ngFor="let ticket of tickets"
         >
           <mat-list-item role="listitem" (click)="selectTicket(ticket)">
             <div fxFlex fxLayout="row" fxLayoutAlign="start">

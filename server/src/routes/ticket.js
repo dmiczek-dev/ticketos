@@ -10,5 +10,6 @@ router.post("/confirm-ticket", TicketController.confirmTicket);
 router.post("/delete-ticket", TicketController.deleteTicket);
 router.post("/call-ticket", TicketController.callTicket);
 router.post("/service-ticket", TicketController.serviceTicket);
+router.post("/service-ticket-and-break", TicketController.serviceTicketAndBreak);
 
 module.exports = router;

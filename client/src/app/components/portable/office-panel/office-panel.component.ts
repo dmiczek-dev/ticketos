@@ -1,6 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Observable } from 'rxjs';
 import { OfficeService } from 'src/app/services/office.service';
 import { TicketService } from 'src/app/services/ticket.service';
 import io from 'socket.io-client';
@@ -14,7 +13,7 @@ import { environment } from 'src/environments/environment';
 export class OfficePanelComponent implements OnInit, OnDestroy {
   today: Date | undefined;
   timerInterval: any;
-  tickets$: Observable<any[]>;
+  tickets: any[];
   activeTicket: any;
   office: any;
   private socket: any;
@@ -40,8 +39,12 @@ export class OfficePanelComponent implements OnInit, OnDestroy {
   }
 
   ngAfterViewInit(): void {
-    this.socket.on('newConfirmedTicketAppear', () => {
+    this.socket.on('reloadConfirmedTickets', () => {
       this.getConfirmedTicketsForCenter();
+    });
+
+    this.socket.on('reloadCalledTickets', () => {
+      this.getCalledTicketForOffice();
     });
   }
 
@@ -53,28 +56,111 @@ export class OfficePanelComponent implements OnInit, OnDestroy {
       .subscribe(
         (res) => {
           this.office = res[0];
-          console.log(this.office);
         },
         (error) => {
           console.log(error);
         },
         () => {
           this.getConfirmedTicketsForCenter();
+          this.getCalledTicketForOffice();
         }
       );
   }
 
   getConfirmedTicketsForCenter() {
-    this.tickets$ = this._ticketSrv.getConfirmedTicketsForCenter({
-      centerId: this.office.centerId,
-    });
-    console.log(this.tickets$);
+    this._ticketSrv
+      .getConfirmedTicketsForCenter({
+        centerId: this.office.centerId,
+      })
+      .subscribe((res) => {
+        this.tickets = res;
+      });
   }
 
-  selectTicket(ticket: any) {}
+  getCalledTicketForOffice() {
+    this._ticketSrv
+      .getCalledTicketForOffice({ officeId: this.office.officeId })
+      .subscribe((res) => {
+        this.activeTicket = res[0];
+      });
+  }
 
-  pushCurrent() {}
-  missing() {}
+  selectTicket(ticket: any) {
+    if (this.activeTicket == null) {
+      this.activeTicket = ticket;
+      this._ticketSrv.callTicket({
+        ticketId: this.activeTicket.ticketId,
+        officeId: this.office.officeId,
+      });
+    } else {
+      this._ticketSrv
+        .serviceTicket({ ticketId: this.activeTicket.ticketId })
+        .subscribe(
+          () => {},
+          (error) => console.log(error),
+          () => {
+            this.activeTicket = ticket;
+            this._ticketSrv
+              .callTicket({
+                ticketId: this.activeTicket.ticketId,
+                officeId: this.office.officeId,
+              })
+              .subscribe(
+                () => {},
+                (error) => console.log(error),
+                () => this.getConfirmedTicketsForCenter()
+              );
+          }
+        );
+    }
+  }
+
+  nextTicket() {
+    if (this.activeTicket == null) {
+      this.activeTicket = this.tickets[0];
+      this._ticketSrv.callTicket({
+        ticketId: this.activeTicket.ticketId,
+        officeId: this.office.officeId,
+      });
+    } else {
+      this._ticketSrv
+        .serviceTicket({ ticketId: this.activeTicket.ticketId })
+        .subscribe(
+          () => {},
+          (error) => console.log(error),
+          () => {
+            this.activeTicket = this.tickets[0];
+            this._ticketSrv
+              .callTicket({
+                ticketId: this.activeTicket.ticketId,
+                officeId: this.office.officeId,
+              })
+              .subscribe(
+                () => {},
+                (error) => console.log(error),
+                () => this.getConfirmedTicketsForCenter()
+              );
+          }
+        );
+    }
+  }
+
+  missing() {
+    if (this.activeTicket != null) {
+      this._ticketSrv
+        .deleteTicket({ ticketId: this.activeTicket.ticketId })
+        .subscribe();
+    }
+  }
+
+  break() {
+    if (this.activeTicket != null) {
+      this._ticketSrv
+        .serviceTicket({ ticketId: this.activeTicket.ticketId })
+        .subscribe();
+    }
+  }
+
+  // Google cloud integration with voice api
   recall() {}
-  break() {}
 }

@@ -9,6 +9,7 @@ const dotenv = require("dotenv");
 const logger = require("morgan");
 const { pgConnect } = require("./src/db/postgres");
 const cors = require("cors");
+const { resetTicketSequence } = require("./src/jobs/scheduler");
 
 //API
 const authRoutes = require("./src/routes/auth");
@@ -41,6 +42,7 @@ server.listen(process.env.PORT, () => {
 
 // Make connection to postgres database
 pgConnect();
+resetTicketSequence();
 
 app.use(logger("dev"));
 app.use(express.json());

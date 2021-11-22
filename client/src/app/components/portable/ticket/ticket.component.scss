@@ -68,9 +68,15 @@ legend {
 
 fieldset {
   width: 100%;
-  display: block;
-  margin: 1em auto;
+  margin-bottom: 10px;
   text-align: center;
-  line-height: 80px;
+  line-height: 110px;
   border: 1px solid #000000;
+}
+
+.print {
+  min-width: 200px;
+  box-shadow: none;
+  margin: 0px;
+  padding: 0px;
 }

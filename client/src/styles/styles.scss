@@ -1,0 +1,57 @@
+/* You can add global styles to this file, and also import other style files */
+
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+.green-snackbar {
+  background-color: var(--success-color);
+  color: #ffffff;
+  max-width: 100% !important;
+}
+
+.red-snackbar {
+  background-color: var(--error-color);
+  color: #ffffff;
+  max-width: 100% !important;
+}
+
+:root {
+  --primary-color: rgb(62, 150, 148);
+  --secondary-color: rgb(30, 102, 101);
+  --success-color: rgb(0, 200, 83);
+  --error-color: #f44336;
+  --warn-color: rgb(235, 124, 21);
+  --grey-color: rgb(149, 149, 149);
+  --light-grey-color: #d3d4d9;
+}
+
+.primary-color-bg {
+  background-color: var(--primary-color);
+  color: #ffffff;
+}
+
+.secondary-color-bg {
+  background-color: var(--secondary-color);
+  color: #ffffff;
+}
+
+.warn-color-bg {
+  background-color: var(--warn-color);
+  color: #ffffff;
+}
+
+.grey-color-bg {
+  background-color: var(--grey-color);
+  color: #ffffff;
+}
+
+.error-color-bg {
+  background-color: var(--error-color);
+  color: #ffffff;
+}

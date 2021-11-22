@@ -93,7 +93,8 @@ exports.validateCreateOffice = function (req, res, next) {
 
   const schema = Joi.object().keys({
     name: Joi.string().required(),
-    mask: Joi.boolean().required(),
+    audio: Joi.boolean().required(),
+    type: Joi.string().required(),
     centerId: Joi.number().required(),
   });
 
@@ -117,7 +118,8 @@ exports.validateEditOffice = function (req, res, next) {
   const schema = Joi.object().keys({
     officeId: Joi.number().required(),
     name: Joi.string().required(),
-    mask: Joi.boolean().required(),
+    audio: Joi.boolean().required(),
+    type: Joi.string().required(),
     centerId: Joi.number().required(),
   });
 

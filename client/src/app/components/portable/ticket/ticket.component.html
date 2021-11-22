@@ -20,15 +20,15 @@
   </div>
 </div>
 
-<mat-card print-section>
-  <mat-card-content fxLayout="row" fxLayoutAlign="center">
-    <div class="preview" fxLayout="column" fxLayoutAlign="space-around center">
+<mat-card print-section class="print">
+  <mat-card-content>
+    <div fxLayout="column" fxLayoutAlign="space-around center">
       <span class="header" fxFlex="10">{{ printerSettings?.title }}</span>
       <span class="subheader" fxFlex="10">{{ printerSettings?.subtitle }}</span>
 
       <div class="date-box" fxFlex="10">
         <p>{{ today | date: "dd/MM/yyyy" }}</p>
-        <p>{{ today | date: "HH:mm:ss" }}</p>
+        <p>{{ today | date: "HH:mm" }}</p>
       </div>
       <fieldset class="full-width align-center" fxFlex="60">
         <!-- <legend>{{ settings.type }}</legend> -->

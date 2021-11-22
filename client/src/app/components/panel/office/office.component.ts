@@ -11,10 +11,16 @@ import { OfficeService } from 'src/app/services/office.service';
 export interface DialogData {
   officeId: number;
   name: string;
-  mask: boolean;
+  audio: boolean;
+  type: string;
   centerId: number;
   action: string;
   centers: any;
+}
+
+export enum OfficeType {
+  office = 'GABINET',
+  register = 'REJESTRACJA',
 }
 
 @Component({
@@ -27,14 +33,16 @@ export class OfficeComponent implements OnInit {
   centers = [];
   action: string | undefined;
   name: string | undefined;
-  mask: boolean | undefined;
+  audio: boolean | undefined;
+  type: string | undefined;
   officeId: number | undefined;
   centerId: number | undefined;
 
   displayedColumns: string[] = [
     'officeId',
     'name',
-    'mask',
+    'audio',
+    'type',
     'centerId',
     'options',
   ];
@@ -65,7 +73,8 @@ export class OfficeComponent implements OnInit {
   addOffice(data: any) {
     this.officeId = undefined;
     this.name = undefined;
-    this.mask = undefined;
+    this.audio = undefined;
+    this.type = undefined;
     this.centerId = undefined;
     this.action = data.action;
     this.openDialog();
@@ -73,7 +82,8 @@ export class OfficeComponent implements OnInit {
   editOffice(data: any) {
     this.officeId = data.officeId;
     this.name = data.name;
-    this.mask = data.mask;
+    this.audio = data.audio;
+    this.type = data.type;
     this.centerId = data.centerId;
     this.action = data.action;
     this.openDialog();
@@ -90,7 +100,8 @@ export class OfficeComponent implements OnInit {
       data: {
         officeId: this.officeId,
         name: this.name,
-        mask: this.mask,
+        audio: this.audio,
+        type: this.type,
         centerId: this.centerId,
         action: this.action,
         centers: this.centers,
@@ -103,7 +114,8 @@ export class OfficeComponent implements OnInit {
             this._officeSrv
               .addOffice({
                 name: result.name,
-                mask: result.mask,
+                audio: result.audio,
+                type: result.type,
                 centerId: result.centerId,
               })
               .subscribe(
@@ -133,7 +145,8 @@ export class OfficeComponent implements OnInit {
               .editOffice({
                 officeId: result.officeId,
                 name: result.name,
-                mask: result.mask,
+                audio: result.audio,
+                type: result.type,
                 centerId: result.centerId,
               })
               .subscribe(
@@ -195,6 +208,7 @@ export class OfficeComponent implements OnInit {
   templateUrl: './office-dialog.component.html',
 })
 export class OfficeDialogComponent {
+  officeTypeEnum = OfficeType;
   constructor(
     public dialogRef: MatDialogRef<OfficeDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData

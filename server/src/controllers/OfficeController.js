@@ -4,7 +4,7 @@ exports.getOffices = (req, res) => {
   const pgClient = getClient();
 
   pgClient
-    .query('SELECT office_id AS "officeId", name, mask, center_id AS "centerId" FROM offices ORDER BY office_id')
+    .query('SELECT office_id AS "officeId", name, audio, type, center_id AS "centerId" FROM offices ORDER BY office_id')
     .then((result) => {
       res.status(200).send(result.rows);
     })
@@ -22,7 +22,7 @@ exports.getOfficeById = (req, res) => {
   const officeId = req.params.officeId;
 
   pgClient
-    .query('SELECT office_id AS "officeId", name, mask, center_id AS "centerId" FROM offices WHERE office_id = $1', [officeId])
+    .query('SELECT office_id AS "officeId", name, audio, type, center_id AS "centerId" FROM offices WHERE office_id = $1', [officeId])
     .then((result) => {
       res.status(200).send(result.rows);
     })
@@ -37,12 +37,13 @@ exports.getOfficeById = (req, res) => {
 
 exports.createOffice = (req, res) => {
   const pgClient = getClient();
-  const mask = req.body.mask;
+  const audio = req.body.audio;
+  const type = req.body.type;
   const centerId = req.body.centerId;
   const name = req.body.name;
 
   pgClient
-    .query("INSERT INTO offices(office_id, name, mask, center_id) VALUES (DEFAULT, $1, $2, $3)", [name, mask, centerId])
+    .query("INSERT INTO offices(office_id, name, audio, type, center_id) VALUES (DEFAULT, $1, $2, $3, $4)", [name, audio, type, centerId])
     .then((result) => {
       res.status(200).send(result.rows);
     })
@@ -58,12 +59,19 @@ exports.createOffice = (req, res) => {
 exports.editOffice = (req, res) => {
   const pgClient = getClient();
   const name = req.body.name;
-  const mask = req.body.mask;
+  const audio = req.body.audio;
+  const type = req.body.type;
   const centerId = req.body.centerId;
   const officeId = req.body.officeId;
 
   pgClient
-    .query("UPDATE offices SET name = $1, mask = $2, center_id = $3 WHERE office_id = $4", [name, mask, centerId, officeId])
+    .query("UPDATE offices SET name = $1, audio = $2, type = $3, center_id = $4 WHERE office_id = $5", [
+      name,
+      audio,
+      type,
+      centerId,
+      officeId,
+    ])
     .then((result) => {
       res.status(200).send(result.rows);
     })

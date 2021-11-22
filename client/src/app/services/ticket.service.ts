@@ -23,10 +23,10 @@ export class TicketService {
     return this.http.post<any>(this._ip + '/newest-tickets-for-center', center);
   }
 
-  getConfirmedTicketsForCenter(center: any): Observable<any> {
+  getConfirmedTicketsForCenter(data: any): Observable<any> {
     return this.http.post<any>(
       this._ip + '/confirmed-tickets-for-center',
-      center
+      data
     );
   }
 

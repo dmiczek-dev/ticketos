@@ -5,6 +5,8 @@ import { OfficeService } from 'src/app/services/office.service';
 import { TicketService } from 'src/app/services/ticket.service';
 import io from 'socket.io-client';
 import { environment } from 'src/environments/environment';
+import { GoogleService } from 'src/app/services/google.service';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-office-view',
@@ -17,11 +19,14 @@ export class OfficeViewComponent implements OnInit, OnDestroy {
   ticket: any;
   office: any;
   private socket: any;
+  res: any;
 
   constructor(
     private _officeSrv: OfficeService,
     private _ticketSrv: TicketService,
-    private _route: ActivatedRoute
+    private _route: ActivatedRoute,
+    private _googleSrv: GoogleService,
+    private sanitizer: DomSanitizer
   ) {}
 
   ngOnInit(): void {
@@ -63,13 +68,37 @@ export class OfficeViewComponent implements OnInit, OnDestroy {
       );
   }
 
+  audioEnded() {
+    this.res = undefined;
+  }
+
   getCalledTicketForOffice() {
     this._ticketSrv
       .getCalledTicketForOffice({
         officeId: this.office.officeId,
       })
-      .subscribe((res) => {
-        this.ticket = res[0];
-      });
+      .subscribe(
+        (res) => {
+          this.ticket = res[0];
+        },
+        (error) => console.log(error),
+        () => {
+          console.log('before-tts');
+          if (this.ticket != undefined) {
+            console.log('tts');
+            const textToSpeech = `Zapraszamy pacjenta z biletem, ${
+              this.ticket?.mark + this.ticket?.number
+            }.`;
+
+            this._googleSrv
+              .googleSpeech(textToSpeech)
+              .subscribe((data: any) => {
+                this.res = this.sanitizer.bypassSecurityTrustResourceUrl(
+                  'data:audio/mp3;base64,' + data['audioContent']
+                );
+              });
+          }
+        }
+      );
   }
 }

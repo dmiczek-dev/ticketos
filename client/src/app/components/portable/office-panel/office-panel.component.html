@@ -21,7 +21,11 @@
       fxFlexOffset="20px"
     >
       <div class="active-ticket-box digits">
-        {{ activeTicket == null ? "PRZERWA" : activeTicket }}
+        {{
+          activeTicket == null
+            ? "PRZERWA"
+            : activeTicket.mark + activeTicket.number
+        }}
       </div>
       <div fxLayout="row" fxLayoutGap="20px">
         <button
@@ -73,7 +77,7 @@
           <mat-list-item role="listitem" (click)="selectTicket(ticket)">
             <div fxFlex fxLayout="row" fxLayoutAlign="start">
               <p class="ticket-number">
-                {{ ticket.number + ticket.mark }}
+                {{ ticket.mark + ticket.number }}
               </p>
             </div>
 

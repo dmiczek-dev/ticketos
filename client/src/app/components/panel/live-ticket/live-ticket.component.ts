@@ -2,6 +2,8 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { TicketService } from 'src/app/services/ticket.service';
+import { environment } from 'src/environments/environment';
+import io from 'socket.io-client';
 
 @Component({
   selector: 'app-live-ticket',
@@ -14,8 +16,8 @@ export class LiveTicketComponent implements OnInit {
     'printDate',
     'confirmDate',
     'callDate',
-    'office',
-    'center',
+    'officeName',
+    'centerName',
   ];
 
   tickets = [];
@@ -27,6 +29,7 @@ export class LiveTicketComponent implements OnInit {
   constructor(private ticketService: TicketService) {}
 
   ngOnInit(): void {
+    this.socket = io(environment.socket_address);
     this.getLiveTickets();
   }
 
@@ -35,8 +38,13 @@ export class LiveTicketComponent implements OnInit {
   }
 
   ngAfterViewInit(): void {
-    this.socket.on('subscribe', () => {});
-    this.socket.on('refreshTicketQueue', () => {
+    this.socket.on('reloadConfirmedTickets', () => {
+      this.getLiveTickets();
+    });
+    this.socket.on('reloadCalledTickets', () => {
+      this.getLiveTickets();
+    });
+    this.socket.on('reloadNewestTickets', () => {
       this.getLiveTickets();
     });
   }
@@ -45,6 +53,7 @@ export class LiveTicketComponent implements OnInit {
     this.ticketService.getLiveTickets().subscribe(
       (res) => {
         this.dataSource.data = res;
+        console.log(res);
       },
       (error) => {
         console.log(error);

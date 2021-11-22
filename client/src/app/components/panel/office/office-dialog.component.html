@@ -1,25 +1,40 @@
 <h1 mat-dialog-title>
-  {{ data.action === "add" ? "Dodaj gabinet" : data.action === "edit" ? "Edytuj
-  gabinet" : "Usuń gabinet" }}
+  {{
+    data.action === "add"
+      ? "Dodaj gabinet"
+      : data.action === "edit"
+      ? "Edytuj
+  gabinet"
+      : "Usuń gabinet"
+  }}
 </h1>
 <div mat-dialog-content fxLayout="column" *ngIf="data.action !== 'delete'">
   <mat-form-field appearance="outline" fxFlex>
     <mat-label>Podmiot medyczny</mat-label>
     <mat-select [(value)]="data.centerId" name="centerId">
-      <mat-option *ngFor="let center of data.centers" [value]="center.centerId"
+      <mat-option
+        *ngFor="let center of data.centers"
+        [value]="center.centerId"
         >{{ center.name }}</mat-option
       >
     </mat-select>
   </mat-form-field>
   <mat-form-field fxFlex appearance="outline">
     <mat-label>Nazwa</mat-label>
-    <input matInput [(ngModel)]="data.name" required />
+    <input matInput [(ngModel)]="data.name" required autocomplete="off" />
   </mat-form-field>
   <mat-form-field appearance="outline" fxFill>
-    <mat-label>Maskowanie</mat-label>
-    <mat-select [(value)]="data.mask" name="mask">
+    <mat-label>Audio</mat-label>
+    <mat-select [(value)]="data.audio" name="audio">
       <mat-option [value]="false">Wyłączone</mat-option>
       <mat-option [value]="true">Włączone</mat-option>
+    </mat-select>
+  </mat-form-field>
+  <mat-form-field appearance="outline" fxFill>
+    <mat-label>Rodzaj</mat-label>
+    <mat-select [(value)]="data.type" name="type">
+      <mat-option [value]="officeTypeEnum.office">Gabinet</mat-option>
+      <mat-option [value]="officeTypeEnum.register">Rejestracja</mat-option>
     </mat-select>
   </mat-form-field>
 </div>
@@ -33,7 +48,8 @@
     [mat-dialog-close]="{
       officeId: data.officeId,
       name: data.name,
-      mask: data.mask,
+      audio: data.audio,
+      type: data.type,
       centerId: data.centerId,
       action: data.action
     }"

@@ -35,6 +35,7 @@ export class OfficePanelComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
+    this.socket.removeAllListeners();
     clearInterval(this.timerInterval);
   }
 
@@ -71,6 +72,7 @@ export class OfficePanelComponent implements OnInit, OnDestroy {
     this._ticketSrv
       .getConfirmedTicketsForCenter({
         centerId: this.office.centerId,
+        officeId: this.office.officeId,
       })
       .subscribe((res) => {
         this.tickets = res;
@@ -81,17 +83,20 @@ export class OfficePanelComponent implements OnInit, OnDestroy {
     this._ticketSrv
       .getCalledTicketForOffice({ officeId: this.office.officeId })
       .subscribe((res) => {
+        console.log(res);
+
         this.activeTicket = res[0];
       });
   }
 
   selectTicket(ticket: any) {
     if (this.activeTicket == null) {
-      this.activeTicket = ticket;
-      this._ticketSrv.callTicket({
-        ticketId: this.activeTicket.ticketId,
-        officeId: this.office.officeId,
-      });
+      this._ticketSrv
+        .callTicket({
+          ticketId: ticket.ticketId,
+          officeId: this.office.officeId,
+        })
+        .subscribe();
     } else {
       this._ticketSrv
         .serviceTicket({ ticketId: this.activeTicket.ticketId })
@@ -99,10 +104,9 @@ export class OfficePanelComponent implements OnInit, OnDestroy {
           () => {},
           (error) => console.log(error),
           () => {
-            this.activeTicket = ticket;
             this._ticketSrv
               .callTicket({
-                ticketId: this.activeTicket.ticketId,
+                ticketId: ticket.ticketId,
                 officeId: this.office.officeId,
               })
               .subscribe(
@@ -116,12 +120,16 @@ export class OfficePanelComponent implements OnInit, OnDestroy {
   }
 
   nextTicket() {
+    console.log('nextTicket');
+
     if (this.activeTicket == null) {
-      this.activeTicket = this.tickets[0];
-      this._ticketSrv.callTicket({
-        ticketId: this.activeTicket.ticketId,
-        officeId: this.office.officeId,
-      });
+      console.log('activeTicket = null');
+      this._ticketSrv
+        .callTicket({
+          ticketId: this.tickets[0].ticketId,
+          officeId: this.office.officeId,
+        })
+        .subscribe();
     } else {
       this._ticketSrv
         .serviceTicket({ ticketId: this.activeTicket.ticketId })
@@ -129,10 +137,9 @@ export class OfficePanelComponent implements OnInit, OnDestroy {
           () => {},
           (error) => console.log(error),
           () => {
-            this.activeTicket = this.tickets[0];
             this._ticketSrv
               .callTicket({
-                ticketId: this.activeTicket.ticketId,
+                ticketId: this.tickets[0].ticketId,
                 officeId: this.office.officeId,
               })
               .subscribe(

@@ -58,8 +58,6 @@ export class RegisterPanelComponent
     }, 1000);
 
     this.office = parseInt(this._route.snapshot.paramMap.get('officeId')!);
-
-    this.getTicketTypes();
     this.getOfficeById();
   }
 
@@ -73,11 +71,12 @@ export class RegisterPanelComponent
     });
   }
 
-  //TODO: Optional, get ticket types based on center
-  getTicketTypes() {
-    this._ticketTypeSrv.getTicketTypes().subscribe((res) => {
-      this.ticketTypes = res;
-    });
+  getTicketTypesForOffice() {
+    this._ticketTypeSrv
+      .getPinnedTicketTypesByOfficeId({ officeId: this.office.officeId })
+      .subscribe((res) => {
+        this.ticketTypes = res;
+      });
   }
 
   getOfficeById() {
@@ -88,13 +87,13 @@ export class RegisterPanelComponent
       .subscribe(
         (res) => {
           this.office = res[0];
-          console.log(this.office);
         },
         (error) => {
           console.log(error);
         },
         () => {
           this.getNewestTicketsForCenter();
+          this.getTicketTypesForOffice();
         }
       );
   }

@@ -4,7 +4,9 @@ exports.getLiveTickets = (req, res) => {
   const pgClient = getClient();
 
   pgClient
-    .query("SELECT * FROM live_tickets")
+    .query(
+      'SELECT number, mark, print_date AS "printDate", confirm_date AS "confirmDate", call_date AS "callDate", office_name AS "officeName", center_name AS "centerName" FROM live_tickets'
+    )
     .then((result) => {
       res.status(200).send(result.rows);
     })
@@ -104,11 +106,33 @@ exports.deleteTicket = (req, res) => {
 exports.getConfirmedTicketsForCenter = (req, res) => {
   const pgClient = getClient();
   const centerId = req.body.centerId;
+  const officeId = req.body.officeId;
 
   pgClient
     .query(
-      'SELECT ticket_id AS "ticketId", number, print_date AS "printDate", confirm_date AS "confirmDate", call_date AS "callDate", service_date AS "serviceDate", ticket_type_id AS "ticketTypeId", center_id AS "centerId", office_id AS "officeId", name, mark, sequence FROM tickets_view WHERE center_id = $1 AND EXTRACT(DAY FROM confirm_date) = EXTRACT(DAY FROM now()) AND EXTRACT(MONTH FROM confirm_date) = EXTRACT(MONTH FROM now()) AND EXTRACT(YEAR FROM confirm_date) = EXTRACT(YEAR FROM now()) AND call_date IS NULL ORDER BY sequence, print_date LIMIT 10',
-      [centerId]
+      'SELECT ticket_id as "ticketId", number, print_date as "printDate", confirm_date AS "confirmDate", call_date AS "callDate", service_date AS "serviceDate", ticket_type_id AS "ticketTypeId", center_id AS "centerId", office_id AS "officeId", name, mark, (SELECT sequence FROM office_ticket_types WHERE ticket_type_id = tv.ticket_type_id AND office_id = $1) as sequence FROM tickets_view tv WHERE center_id = $2 AND EXTRACT(DAY FROM confirm_date) = EXTRACT(DAY FROM now()) AND EXTRACT(MONTH FROM confirm_date) = EXTRACT(MONTH FROM now()) AND EXTRACT(YEAR FROM confirm_date) = EXTRACT(YEAR FROM now()) AND call_date IS NULL ORDER BY sequence, print_date LIMIT 10',
+      [officeId, centerId]
+    )
+    .then((result) => {
+      res.status(200).send(result.rows);
+    })
+    .catch((err) => {
+      res.status(500).send({
+        message: "Cannot GET confirmed tickets from DB",
+        detailed_message: err,
+      });
+      console.error(err);
+    });
+};
+
+exports.getCalledTicketForOffice = (req, res) => {
+  const pgClient = getClient();
+  const officeId = req.body.officeId;
+
+  pgClient
+    .query(
+      'SELECT ticket_id AS "ticketId", number, print_date AS "printDate", confirm_date AS "confirmDate", call_date AS "callDate", service_date AS "serviceDate", ticket_type_id AS "ticketTypeId", center_id AS "centerId", office_id AS "officeId", name, mark, sequence FROM tickets_view WHERE office_id = $1 AND EXTRACT(DAY FROM call_date) = EXTRACT(DAY FROM now()) AND EXTRACT(MONTH FROM call_date) = EXTRACT(MONTH FROM now()) AND EXTRACT(YEAR FROM call_date) = EXTRACT(YEAR FROM now()) AND service_date IS NULL ORDER BY sequence, print_date',
+      [officeId]
     )
     .then((result) => {
       res.status(200).send(result.rows);
@@ -175,27 +199,6 @@ exports.serviceTicketAndBreak = (req, res) => {
     .catch((err) => {
       res.status(500).send({
         message: "Cannot UPDATE ticket in DB",
-        detailed_message: err,
-      });
-      console.error(err);
-    });
-};
-
-exports.getActiveTicketForOffice = (req, res) => {
-  const pgClient = getClient();
-  const officeId = req.body.officeId;
-
-  pgClient
-    .query(
-      'SELECT ticket_id AS "ticketId", number, print_date AS "printDate", confirm_date AS "confirmDate", call_date AS "callDate", service_date AS "serviceDate", ticket_type_id AS "ticketTypeId", center_id AS "centerId", office_id AS "officeId", name, mark, sequence FROM tickets_view WHERE office_id = $1 AND EXTRACT(DAY FROM call_date) = EXTRACT(DAY FROM now()) AND EXTRACT(MONTH FROM call_date) = EXTRACT(MONTH FROM now()) AND EXTRACT(YEAR FROM call_date) = EXTRACT(YEAR FROM now()) AND service_date IS NULL ORDER BY sequence, print_date LIMIT 10',
-      [officeId]
-    )
-    .then((result) => {
-      res.status(200).send(result.rows);
-    })
-    .catch((err) => {
-      res.status(500).send({
-        message: "Cannot GET active ticket from DB",
         detailed_message: err,
       });
       console.error(err);

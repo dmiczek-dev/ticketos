@@ -17,12 +17,18 @@
       <mat-header-cell *matHeaderCellDef> Nazwa </mat-header-cell>
       <mat-cell *matCellDef="let element">{{ element.name }}</mat-cell>
     </ng-container>
-    <!-- Mask Column -->
-    <ng-container matColumnDef="mask">
-      <mat-header-cell *matHeaderCellDef> Maskowanie </mat-header-cell>
-      <mat-cell *matCellDef="let element">{{ element.mask }}</mat-cell>
+    <!-- Audio Column -->
+    <ng-container matColumnDef="audio">
+      <mat-header-cell *matHeaderCellDef> Audio </mat-header-cell>
+      <mat-cell *matCellDef="let element">{{ element.audio }}</mat-cell>
     </ng-container>
-    <!-- Mask Column -->
+    <!-- Audio Column -->
+    <!-- Type Column -->
+    <ng-container matColumnDef="type">
+      <mat-header-cell *matHeaderCellDef> Rodzaj </mat-header-cell>
+      <mat-cell *matCellDef="let element">{{ element.type }}</mat-cell>
+    </ng-container>
+    <!-- Type Column -->
     <ng-container matColumnDef="centerId">
       <mat-header-cell *matHeaderCellDef>
         Podmiot medyczny (id)
@@ -47,7 +53,8 @@
             editOffice({
               officeId: element.officeId,
               name: element.name,
-              mask: element.mask,
+              audio: element.audio,
+              type: element.type,
               centerId: element.centerId,
               action: 'edit'
             })
@@ -62,7 +69,8 @@
             deleteOffice({
               officeId: element.officeId,
               name: element.name,
-              mask: element.mask,
+              audio: element.audio,
+              type: element.type,
               centerId: element.centerId,
               action: 'delete'
             })

@@ -63,7 +63,7 @@ export class TicketComponent implements OnInit {
       })
       .subscribe(
         (res) => {
-          this.next = res[0].number + ticketType.mark;
+          this.next = ticketType.mark + res[0].number;
           this.cdr.detectChanges();
         },
         (error) => {

@@ -1,3 +1,41 @@
-<p>
-  Wyświetlenie wszystkich stanowisk w placówce (shortcut) oraz wykres z biletami
-</p>
+<mat-list>
+  <div mat-subheader>Automaty do biletów</div>
+  <mat-list-item *ngFor="let center of centers">
+    <mat-icon routerLink="../kiosk/{{ center.centerId }}/pobierz-bilet" mat-list-icon>print</mat-icon>
+    <div mat-line>{{ center.name }}</div>
+    <div mat-line>
+      URL: {{ href }}/kiosk/{{ center.centerId }}/pobierz-bilet
+    </div>
+  </mat-list-item>
+  <mat-divider></mat-divider>
+  <div mat-subheader>Panele sterujące dla rejestracji</div>
+  <ng-container *ngFor="let office of offices">
+    <mat-list-item *ngIf="office.type === 'REJESTRACJA'">
+      <mat-icon routerLink="../widok/panel-rejestracja/{{ office.officeId }}" mat-list-icon>queue_play_next</mat-icon>
+      <div mat-line>{{ office.name }}</div>
+      <div mat-line>
+        URL: {{ href }}/widok/panel-rejestracja/{{ office.officeId }}
+      </div>
+    </mat-list-item>
+  </ng-container>
+  <mat-divider></mat-divider>
+  <div mat-subheader>Panele sterujące dla gabinetów</div>
+  <ng-container *ngFor="let office of offices">
+    <mat-list-item *ngIf="office.type === 'GABINET'">
+      <mat-icon routerLink="../widok/panel-gabinet/{{ office.officeId }}" mat-list-icon>queue_play_next</mat-icon>
+      <div mat-line>{{ office.name }}</div>
+      <div mat-line>
+        URL: {{ href }}/widok/panel-gabinet/{{ office.officeId }}
+      </div>
+    </mat-list-item>
+  </ng-container>
+  <mat-divider></mat-divider>
+  <div mat-subheader>Wyświetlacze</div>
+  <ng-container *ngFor="let office of offices">
+    <mat-list-item *ngIf="office.type === 'GABINET'">
+      <mat-icon routerLink="../widok/gabinet/{{ office.officeId }}" mat-list-icon>video_label</mat-icon>
+      <div mat-line>{{ office.name }}</div>
+      <div mat-line>URL: {{ href }}/widok/gabinet/{{ office.officeId }}</div>
+    </mat-list-item>
+  </ng-container>
+</mat-list>

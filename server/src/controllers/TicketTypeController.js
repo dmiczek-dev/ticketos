@@ -213,7 +213,11 @@ exports.optimizeSequence = (req, res) => {
   //Fix other records sequence before update
   if (prevSequence < sequence) {
     pgClient
-      .query("UPDATE office_ticket_types SET sequence = sequence - 1 WHERE sequence > $1 AND sequence <= $2", [prevSequence, sequence])
+      .query("UPDATE office_ticket_types SET sequence = sequence - 1 WHERE sequence > $1 AND sequence <= $2 AND office_id = $3", [
+        prevSequence,
+        sequence,
+        officeId,
+      ])
       .then(() => {
         pgClient
           .query("UPDATE office_ticket_types SET sequence = $1 WHERE office_id = $2 AND ticket_type_id = $3", [
@@ -234,7 +238,11 @@ exports.optimizeSequence = (req, res) => {
       });
   } else {
     pgClient
-      .query("UPDATE office_ticket_types SET sequence = sequence + 1 WHERE sequence < $1 AND sequence >= $2", [prevSequence, sequence])
+      .query("UPDATE office_ticket_types SET sequence = sequence + 1 WHERE sequence < $1 AND sequence >= $2 AND office_id = $3", [
+        prevSequence,
+        sequence,
+        officeId,
+      ])
       .then(() => {
         pgClient
           .query("UPDATE office_ticket_types SET sequence = $1 WHERE office_id = $2 AND ticket_type_id = $3", [

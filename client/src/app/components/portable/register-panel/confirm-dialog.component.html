@@ -4,37 +4,25 @@
   <mat-form-field appearance="outline" fxFlex>
     <mat-label>Rodzaj biletu</mat-label>
     <mat-select [(value)]="data.ticketTypeId" name="ticketTypeId">
-      <mat-option
-        *ngFor="let ticketType of data.ticketTypes"
-        [value]="ticketType.ticketTypeId"
-        >{{ ticketType.name }}</mat-option
-      >
+      <mat-option *ngFor="let ticketType of data.ticketTypes" [value]="ticketType.ticketTypeId">{{ ticketType.name }}
+      </mat-option>
     </mat-select>
   </mat-form-field>
 </div>
 <div mat-dialog-actions>
-  <button
-    mat-button
-    [mat-dialog-close]="{
-      ticketId: data.ticketId,
-      ticketTypeId: data.ticketTypeId,
-      action: 'delete'
-    }"
-    cdkFocusInitial
-    color="warn"
-  >
-    Odrzuć
-  </button>
-  <button
-    mat-button
-    [mat-dialog-close]="{
+  <button mat-button [mat-dialog-close]="{
       ticketId: data.ticketId,
       ticketTypeId: data.ticketTypeId,
       action: 'confirm'
-    }"
-    cdkFocusInitial
-    color="primary"
-  >
+    }" cdkFocusInitial color="primary">
     Potwierdź
   </button>
+  <button mat-button [mat-dialog-close]="{
+      ticketId: data.ticketId,
+      ticketTypeId: data.ticketTypeId,
+      action: 'delete'
+    }" cdkFocusInitial color="warn">
+    Odrzuć
+  </button>
+
 </div>

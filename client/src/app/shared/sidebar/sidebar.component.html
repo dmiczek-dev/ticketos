@@ -1,54 +1,42 @@
 <mat-nav-list>
   <div class="profile-card">
     <div class="header">
-      <img src="../../../../assets/images/ticketos_logo.png" width="100px" />
+      <img src="../../../../assets/images/medyk_logo.jpg" width="250px" />
     </div>
-    <h2 class="system-title">TicketOS</h2>
+    <!-- <h2 class="system-title">TicketOS</h2> -->
   </div>
 
   <mat-divider></mat-divider>
 
   <h2 matSubheader>TicketOS</h2>
 
-  <a mat-list-item routerLink="/panel" routerLinkActive="list-item-active"
-    ><mat-icon>dashboard</mat-icon>Dashboard</a
-  >
-  <a
-    mat-list-item
-    routerLink="./podmioty-medyczne"
-    routerLinkActive="list-item-active"
-    ><mat-icon>business</mat-icon>Podmioty medyczne</a
-  >
-  <a mat-list-item routerLink="./gabinety" routerLinkActive="list-item-active"
-    ><mat-icon>queue_play_next</mat-icon>Gabinety i stanowiska</a
-  >
-  <a
-    mat-list-item
-    routerLink="./rodzaje-biletow"
-    routerLinkActive="list-item-active"
-    ><mat-icon>transfer_within_a_station</mat-icon>Rodzaje biletów</a
-  >
+  <a mat-list-item routerLink="/panel" routerLinkActive="list-item-active">
+    <mat-icon>dashboard</mat-icon>Dashboard
+  </a>
+  <a mat-list-item routerLink="./podmioty-medyczne" routerLinkActive="list-item-active">
+    <mat-icon>business</mat-icon>Podmioty medyczne
+  </a>
+  <a mat-list-item routerLink="./gabinety" routerLinkActive="list-item-active">
+    <mat-icon>queue_play_next</mat-icon>Gabinety i stanowiska
+  </a>
+  <a mat-list-item routerLink="./rodzaje-biletow" routerLinkActive="list-item-active">
+    <mat-icon>transfer_within_a_station</mat-icon>Rodzaje biletów
+  </a>
 
-  <a mat-list-item routerLink="./pracownie" routerLinkActive="list-item-active"
-    ><mat-icon>biotech</mat-icon>Pracownie</a
-  >
+  <a mat-list-item routerLink="./pracownie" routerLinkActive="list-item-active">
+    <mat-icon>biotech</mat-icon>Pracownie
+  </a>
 
-  <a
-    mat-list-item
-    routerLink="./ustawienia-wydruku"
-    routerLinkActive="list-item-active"
-    ><mat-icon>print</mat-icon>Ustawienia wydruku</a
-  >
-  <a
-    mat-list-item
-    routerLink="./bilety-live"
-    routerLinkActive="list-item-active"
-    ><mat-icon>receipt</mat-icon>Bilety<span class="live">Na żywo </span></a
-  >
+  <a mat-list-item routerLink="./ustawienia-wydruku" routerLinkActive="list-item-active">
+    <mat-icon>print</mat-icon>Ustawienia wydruku
+  </a>
+  <a mat-list-item routerLink="./bilety-live" routerLinkActive="list-item-active">
+    <mat-icon>receipt</mat-icon>Bilety<span class="live">Na żywo </span>
+  </a>
 
   <h2 matSubheader>Opcje</h2>
 
-  <a mat-list-item (click)="logout()" routerLinkActive="list-item-active"
-    ><mat-icon>logout</mat-icon>Wyloguj</a
-  >
+  <a mat-list-item (click)="logout()" routerLinkActive="list-item-active">
+    <mat-icon>logout</mat-icon>Wyloguj
+  </a>
 </mat-nav-list>

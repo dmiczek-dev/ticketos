@@ -1,5 +1,6 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { Router } from '@angular/router';
+import { CommonService } from 'src/app/services/common.service';
 
 @Component({
   selector: 'app-header',
@@ -11,7 +12,7 @@ export class HeaderComponent implements OnInit {
 
   isLoggedIn = false;
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private _commonSrv: CommonService) {}
 
   ngOnInit(): void {
     this.isLoggedIn = !!localStorage.getItem('token');
@@ -29,8 +30,7 @@ export class HeaderComponent implements OnInit {
     }, 300);
   }
 
-  //TODO: Make acctual refresh via socket
   refreshPortableScreens() {
-    alert('Refreshing all screens');
+    this._commonSrv.refreshScreens().subscribe();
   }
 }

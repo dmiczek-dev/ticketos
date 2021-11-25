@@ -16,3 +16,8 @@ exports.createAdminAccount = (req, res) => {
       console.error(err);
     });
 };
+
+exports.refreshScreens = (req, res) => {
+  io.emit("refreshScreens");
+  res.status(200).send({ message: "Refreshing all screens" });
+};

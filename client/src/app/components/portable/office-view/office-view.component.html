@@ -13,7 +13,7 @@
     </mat-toolbar>
   </div>
   <div fxFlexAlign="center" class="ticket digits">
-    {{ ticket == null ? "PRZERWA" : ticket.mark + ticket.number }}
+    {{ ticket == null ? "- -" : ticket.mark + ticket.number }}
   </div>
   <div>
     <mat-toolbar>
@@ -26,13 +26,6 @@
   </div>
 </div>
 
-<audio
-  (ended)="audioEnded()"
-  controls
-  *ngIf="res !== undefined"
-  preload="none"
-  style="display: none"
-  autoplay
->
+<audio (ended)="audioEnded()" controls *ngIf="res !== undefined" preload="none" style="display: none" autoplay>
   <source [src]="res" type="audio/mpeg" />
 </audio>

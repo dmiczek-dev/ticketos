@@ -47,6 +47,10 @@ export class OfficePanelComponent implements OnInit, OnDestroy {
     this.socket.on('reloadCalledTickets', () => {
       this.getCalledTicketForOffice();
     });
+
+    this.socket.on('refreshScreens', () => {
+      window.location.reload();
+    });
   }
 
   getOfficeById() {
@@ -168,6 +172,11 @@ export class OfficePanelComponent implements OnInit, OnDestroy {
     }
   }
 
-  // Google cloud integration with voice api
-  recall() {}
+  recall() {
+    if (this.activeTicket != null) {
+      this._ticketSrv
+        .recallTicket({ ticketId: this.activeTicket.ticketId })
+        .subscribe();
+    }
+  }
 }

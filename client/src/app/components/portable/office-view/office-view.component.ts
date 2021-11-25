@@ -17,6 +17,7 @@ export class OfficeViewComponent implements OnInit, OnDestroy {
   today: Date | undefined;
   timerInterval: any;
   ticket: any;
+  prevTicket: any;
   office: any;
   private socket: any;
   res: any;
@@ -45,7 +46,15 @@ export class OfficeViewComponent implements OnInit, OnDestroy {
 
   ngAfterViewInit(): void {
     this.socket.on('reloadCalledTickets', () => {
-      this.getCalledTicketForOffice();
+      this.reloadCalledTicket();
+    });
+
+    this.socket.on('recallCalledTicket', (ticketId: number) => {
+      this.recallCalledTicket(ticketId);
+    });
+
+    this.socket.on('refreshScreens', () => {
+      window.location.reload();
     });
   }
 
@@ -81,24 +90,54 @@ export class OfficeViewComponent implements OnInit, OnDestroy {
         (res) => {
           this.ticket = res[0];
         },
-        (error) => console.log(error),
-        () => {
-          console.log('before-tts');
-          if (this.ticket != undefined) {
-            console.log('tts');
-            const textToSpeech = `Zapraszamy pacjenta z biletem, ${
-              this.ticket?.mark + this.ticket?.number
-            }.`;
+        (error) => console.log(error)
+      );
+  }
 
-            this._googleSrv
-              .googleSpeech(textToSpeech)
-              .subscribe((data: any) => {
-                this.res = this.sanitizer.bypassSecurityTrustResourceUrl(
-                  'data:audio/mp3;base64,' + data['audioContent']
-                );
-              });
+  reloadCalledTicket() {
+    this._ticketSrv
+      .getCalledTicketForOffice({
+        officeId: this.office.officeId,
+      })
+      .subscribe(
+        (res) => {
+          this.prevTicket = this.ticket;
+          this.ticket = res[0];
+        },
+        (error) => {
+          console.log(error);
+        },
+        () => {
+          if (this.ticket != undefined) {
+            if (this.prevTicket?.number != this.ticket.number) {
+              const textToSpeech = `Zapraszamy pacjenta z biletem, ${
+                this.ticket?.mark + this.ticket?.number
+              }.`;
+
+              this._googleSrv
+                .googleSpeech(textToSpeech)
+                .subscribe((data: any) => {
+                  this.res = this.sanitizer.bypassSecurityTrustResourceUrl(
+                    'data:audio/mp3;base64,' + data['audioContent']
+                  );
+                });
+            }
           }
         }
       );
+  }
+
+  recallCalledTicket(ticketId: number) {
+    if (this.ticket.ticketId == ticketId) {
+      const textToSpeech = `Zapraszamy pacjenta z biletem, ${
+        this.ticket?.mark + this.ticket?.number
+      }.`;
+
+      this._googleSrv.googleSpeech(textToSpeech).subscribe((data: any) => {
+        this.res = this.sanitizer.bypassSecurityTrustResourceUrl(
+          'data:audio/mp3;base64,' + data['audioContent']
+        );
+      });
+    }
   }
 }

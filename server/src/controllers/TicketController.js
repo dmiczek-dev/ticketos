@@ -204,3 +204,8 @@ exports.serviceTicketAndBreak = (req, res) => {
       console.error(err);
     });
 };
+
+exports.recallTicket = (req, res) => {
+  const ticketId = req.body.ticketId;
+  io.emit("recallCalledTicket", ticketId);
+};

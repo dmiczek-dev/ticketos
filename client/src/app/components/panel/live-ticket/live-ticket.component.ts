@@ -47,6 +47,9 @@ export class LiveTicketComponent implements OnInit {
     this.socket.on('reloadNewestTickets', () => {
       this.getLiveTickets();
     });
+    this.socket.on('refreshScreens', () => {
+      window.location.reload();
+    });
   }
 
   getLiveTickets() {

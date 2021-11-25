@@ -53,4 +53,8 @@ export class TicketService {
   serviceTicketAndBreak(ticket: any) {
     return this.http.post<any>(this._ip + '/service-ticket-and-break', ticket);
   }
+
+  recallTicket(ticket: any) {
+    return this.http.post<any>(this._ip + '/recall-ticket', ticket);
+  }
 }

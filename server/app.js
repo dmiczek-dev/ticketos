@@ -10,13 +10,14 @@ const logger = require("morgan");
 const { pgConnect } = require("./src/db/postgres");
 const cors = require("cors");
 const { resetTicketSequence } = require("./src/jobs/scheduler");
+const path = require("path");
 
 //API
 const authRoutes = require("./src/routes/auth");
 const centerRoutes = require("./src/routes/center");
 const officeRoutes = require("./src/routes/office");
 const ticketTypeRoutes = require("./src/routes/ticket-type");
-const userRoutes = require("./src/routes/user");
+const commonRoutes = require("./src/routes/common");
 const labRoutes = require("./src/routes/lab");
 const printerSettingRoutes = require("./src/routes/printer-setting");
 const ticketRoutes = require("./src/routes/ticket");
@@ -52,18 +53,18 @@ app.use("/api", authRoutes);
 app.use("/api", centerRoutes);
 app.use("/api", officeRoutes);
 app.use("/api", ticketTypeRoutes);
-app.use("/api", userRoutes);
+app.use("/api", commonRoutes);
 app.use("/api", labRoutes);
 app.use("/api", printerSettingRoutes);
 app.use("/api", ticketRoutes);
 
 // Site hosting
-// app.use(express.static("public"));
-// app.use(express.static(__dirname + "/public/dist/ticketos"));
+app.use(express.static("public"));
+app.use(express.static(__dirname + "/public/dist/ticketos"));
 
-// app.get("/*", function (req, res) {
-//   res.sendFile(path.join(__dirname + "/public/dist/ticketos/index.html"));
-// });
+app.get("/*", function (req, res) {
+  res.sendFile(path.join(__dirname + "/public/dist/ticketos/index.html"));
+});
 
 // Exception handlers
 process.on("uncaughtException", (error) => {

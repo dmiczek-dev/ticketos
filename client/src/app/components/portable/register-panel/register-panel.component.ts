@@ -69,6 +69,9 @@ export class RegisterPanelComponent
     this.socket.on('reloadNewestTickets', () => {
       this.getNewestTicketsForCenter();
     });
+    this.socket.on('refreshScreens', () => {
+      window.location.reload();
+    });
   }
 
   getTicketTypesForOffice() {

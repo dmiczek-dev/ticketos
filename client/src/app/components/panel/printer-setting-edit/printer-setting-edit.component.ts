@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute } from '@angular/router';
 import { CenterService } from 'src/app/services/center.service';
 import { PrinterSettingService } from 'src/app/services/printer-setting.service';
@@ -22,7 +23,8 @@ export class PrinterSettingEditComponent implements OnInit {
   constructor(
     private _route: ActivatedRoute,
     private _printerSettingSrv: PrinterSettingService,
-    private _centerSrv: CenterService
+    private _centerSrv: CenterService,
+    private _snackBar: MatSnackBar
   ) {}
 
   ngOnInit(): void {
@@ -49,5 +51,24 @@ export class PrinterSettingEditComponent implements OnInit {
   }
 
   //TODO: zapisywanie do bazy
-  onSubmit() {}
+  onSubmit() {
+    this._printerSettingSrv.editPrinterSetting(this.printerSettings).subscribe(
+      (res) => {
+        this._snackBar.open('Ustawienia zostały dodane', '', {
+          duration: 5000,
+          verticalPosition: 'top',
+          horizontalPosition: 'right',
+          panelClass: ['green-snackbar'],
+        });
+      },
+      (error) => {
+        this._snackBar.open('Błąd podczas dodawania ustawień', '', {
+          duration: 5000,
+          verticalPosition: 'top',
+          horizontalPosition: 'right',
+          panelClass: ['red-snackbar'],
+        });
+      }
+    );
+  }
 }

@@ -1,22 +1,18 @@
 <h1 mat-dialog-title>
   {{
-    data.action === "add"
-      ? "Dodaj gabinet"
-      : data.action === "edit"
-      ? "Edytuj
+  data.action === "add"
+  ? "Dodaj gabinet"
+  : data.action === "edit"
+  ? "Edytuj
   gabinet"
-      : "Usuń gabinet"
+  : "Usuń gabinet"
   }}
 </h1>
 <div mat-dialog-content fxLayout="column" *ngIf="data.action !== 'delete'">
   <mat-form-field appearance="outline" fxFlex>
     <mat-label>Podmiot medyczny</mat-label>
     <mat-select [(value)]="data.centerId" name="centerId">
-      <mat-option
-        *ngFor="let center of data.centers"
-        [value]="center.centerId"
-        >{{ center.name }}</mat-option
-      >
+      <mat-option *ngFor="let center of data.centers" [value]="center.centerId">{{ center.name }}</mat-option>
     </mat-select>
   </mat-form-field>
   <mat-form-field fxFlex appearance="outline">
@@ -43,19 +39,14 @@
 </div>
 <div mat-dialog-actions>
   <button mat-button (click)="onNoClick()">Anuluj</button>
-  <button
-    mat-button
-    [mat-dialog-close]="{
+  <button mat-button [mat-dialog-close]="{
       officeId: data.officeId,
       name: data.name,
       audio: data.audio,
       type: data.type,
       centerId: data.centerId,
       action: data.action
-    }"
-    cdkFocusInitial
-    color="primary"
-  >
+    }" cdkFocusInitial color="primary">
     {{ data.action !== "delete" ? "Zapisz" : "Potwierdzam" }}
   </button>
 </div>

@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "Application for live ticket service based on socket.io",
   "main": "app.js",
+  "bin": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -19,5 +20,15 @@
     "node-schedule": "^2.0.0",
     "pg": "^8.7.1",
     "socket.io": "^4.2.0"
+  },
+  "pkg": {
+    "scripts": "src/**/*.js",
+    "assets": [
+      "public/**/*"
+    ],
+    "targets": [
+      "node14-win-x64"
+    ],
+    "outputPath": "dist"
   }
 }

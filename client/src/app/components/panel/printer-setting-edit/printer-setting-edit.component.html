@@ -8,11 +8,7 @@
         <mat-form-field appearance="outline" fxFlex>
           <mat-label>Wybierz podmiot</mat-label>
           <mat-select [(value)]="printerSettings.centerId" name="centerId">
-            <mat-option
-              *ngFor="let center of centers"
-              [value]="center.centerId"
-              >{{ center.name }}</mat-option
-            >
+            <mat-option *ngFor="let center of centers" [value]="center.centerId">{{ center.name }}</mat-option>
           </mat-select>
         </mat-form-field>
 
@@ -23,29 +19,16 @@
 
         <mat-form-field appearance="outline">
           <mat-label>Podtytuł</mat-label>
-          <input
-            matInput
-            [(ngModel)]="printerSettings.subtitle"
-            name="subtitle"
-          />
+          <input matInput [(ngModel)]="printerSettings.subtitle" name="subtitle" />
         </mat-form-field>
 
         <mat-form-field appearance="outline">
           <mat-label>Komunikat</mat-label>
-          <input
-            matInput
-            [(ngModel)]="printerSettings.statement"
-            name="statement"
-          />
+          <input matInput [(ngModel)]="printerSettings.statement" name="statement" />
         </mat-form-field>
       </mat-card-content>
       <mat-card-actions>
-        <button
-          mat-raised-button
-          type="submit"
-          style="margin-left: 13px"
-          class="primary-color-bg"
-        >
+        <button mat-raised-button type="submit" style="margin-left: 13px" class="primary-color-bg">
           Zapisz
         </button>
         <button color="warn" routerLink="../" mat-raised-button>Wróć</button>
@@ -70,7 +53,7 @@
           <p class="time">{{ today | date: "H:mm:ss" }}</p>
         </div>
         <fieldset align="center" fxLayoutAlign="center">
-          <legend>NAZWA GABINETU</legend>
+          <!-- <legend>NAZWA GABINETU</legend> -->
           <div fxLayoutAlign="center">
             <p class="ticket">- 100 -</p>
           </div>

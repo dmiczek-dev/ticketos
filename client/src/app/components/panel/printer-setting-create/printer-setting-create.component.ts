@@ -19,7 +19,7 @@ export class PrinterSettingCreateComponent implements OnInit {
   centers: any[] = [];
 
   constructor(
-    private _printerSettingsSrv: PrinterSettingService,
+    private _printerSettingSrv: PrinterSettingService,
     private _centerSrv: CenterService,
     private _snackBar: MatSnackBar
   ) {}
@@ -36,7 +36,7 @@ export class PrinterSettingCreateComponent implements OnInit {
   }
 
   onSubmit() {
-    this._printerSettingsSrv.addPrinterSetting(this.printerSettings).subscribe(
+    this._printerSettingSrv.addPrinterSetting(this.printerSettings).subscribe(
       (res) => {
         this._snackBar.open('Ustawienia zostały dodane', '', {
           duration: 5000,

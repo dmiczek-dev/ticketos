@@ -108,7 +108,7 @@ export class OfficeViewComponent implements OnInit, OnDestroy {
           console.log(error);
         },
         () => {
-          if (this.ticket != undefined) {
+          if (this.ticket != undefined && this.office.audio == true) {
             if (this.prevTicket?.number != this.ticket.number) {
               const textToSpeech = `Zapraszamy pacjenta z biletem, ${
                 this.ticket?.mark + this.ticket?.number
@@ -128,7 +128,7 @@ export class OfficeViewComponent implements OnInit, OnDestroy {
   }
 
   recallCalledTicket(ticketId: number) {
-    if (this.ticket.ticketId == ticketId) {
+    if (this.ticket.ticketId == ticketId && this.office.audio == true) {
       const textToSpeech = `Zapraszamy pacjenta z biletem, ${
         this.ticket?.mark + this.ticket?.number
       }.`;

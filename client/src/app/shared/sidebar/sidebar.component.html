@@ -1,9 +1,10 @@
 <mat-nav-list>
   <div class="profile-card">
     <div class="header">
-      <img src="../../../../assets/images/medyk_logo.jpg" width="250px" />
+      <!-- <img src="../../../../assets/images/medyk_logo.jpg" width="250px" /> -->
+      <img src="../../../../assets/images/ticketos_logo.png" width="100px" />
     </div>
-    <!-- <h2 class="system-title">TicketOS</h2> -->
+    <h2 class="system-title">TicketOS</h2>
   </div>
 
   <mat-divider></mat-divider>
@@ -24,7 +25,7 @@
   </a>
 
   <a mat-list-item routerLink="./pracownie" routerLinkActive="list-item-active">
-    <mat-icon>biotech</mat-icon>Pracownie
+    <mat-icon>desktop_mac</mat-icon>Pracownie
   </a>
 
   <a mat-list-item routerLink="./ustawienia-wydruku" routerLinkActive="list-item-active">
@@ -37,6 +38,6 @@
   <h2 matSubheader>Opcje</h2>
 
   <a mat-list-item (click)="logout()" routerLinkActive="list-item-active">
-    <mat-icon>logout</mat-icon>Wyloguj
+    <mat-icon>exit_to_app</mat-icon>Wyloguj
   </a>
 </mat-nav-list>

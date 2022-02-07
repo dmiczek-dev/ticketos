@@ -8,10 +8,6 @@ import { RouterModule } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 import { KioskComponent } from '../layouts/kiosk/kiosk.component';
 import { PrintSectionDirective } from '../directives/print-section.directive';
-import {
-  ConfirmDialogComponent,
-  RegisterPanelComponent,
-} from '../components/portable/register-panel/register-panel.component';
 import { TicketService } from '../services/ticket.service';
 import { OfficePanelComponent } from '../components/portable/office-panel/office-panel.component';
 import { OfficeViewComponent } from '../components/portable/office-view/office-view.component';
@@ -21,8 +17,6 @@ import { OfficeViewComponent } from '../components/portable/office-view/office-v
     KioskComponent,
     TicketComponent,
     PrintSectionDirective,
-    RegisterPanelComponent,
-    ConfirmDialogComponent,
     OfficePanelComponent,
     OfficeViewComponent,
   ],

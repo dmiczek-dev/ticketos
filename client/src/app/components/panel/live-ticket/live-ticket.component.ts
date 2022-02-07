@@ -14,7 +14,6 @@ export class LiveTicketComponent implements OnInit {
   displayedColumns: string[] = [
     'numberAndMark',
     'printDate',
-    'confirmDate',
     'callDate',
     'officeName',
     'centerName',
@@ -38,13 +37,10 @@ export class LiveTicketComponent implements OnInit {
   }
 
   ngAfterViewInit(): void {
-    this.socket.on('reloadConfirmedTickets', () => {
+    this.socket.on('reloadNewestTickets', () => {
       this.getLiveTickets();
     });
     this.socket.on('reloadCalledTickets', () => {
-      this.getLiveTickets();
-    });
-    this.socket.on('reloadNewestTickets', () => {
       this.getLiveTickets();
     });
     this.socket.on('refreshScreens', () => {

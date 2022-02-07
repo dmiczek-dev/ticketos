@@ -14,7 +14,6 @@ import { PrinterSettingsComponent } from './components/panel/printer-settings/pr
 import { TicketTypeComponent } from './components/panel/ticket-type/ticket-type.component';
 import { OfficePanelComponent } from './components/portable/office-panel/office-panel.component';
 import { OfficeViewComponent } from './components/portable/office-view/office-view.component';
-import { RegisterPanelComponent } from './components/portable/register-panel/register-panel.component';
 import { TicketComponent } from './components/portable/ticket/ticket.component';
 import { KioskComponent } from './layouts/kiosk/kiosk.component';
 import { PanelComponent } from './layouts/panel/panel.component';
@@ -71,10 +70,6 @@ const routes: Routes = [
   {
     path: 'widok',
     children: [
-      {
-        path: 'panel-rejestracja/:officeId',
-        component: RegisterPanelComponent,
-      },
       { path: 'panel-gabinet/:officeId', component: OfficePanelComponent },
       { path: 'gabinet/:officeId', component: OfficeViewComponent },
     ],

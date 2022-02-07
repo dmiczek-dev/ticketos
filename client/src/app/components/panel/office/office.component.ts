@@ -7,6 +7,7 @@ import {
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { CenterService } from 'src/app/services/center.service';
 import { OfficeService } from 'src/app/services/office.service';
+import { OfficeTypeEnum } from 'src/app/enums/OfficeTypeEnum';
 
 export interface DialogData {
   officeId: number;
@@ -16,11 +17,6 @@ export interface DialogData {
   centerId: number;
   action: string;
   centers: any;
-}
-
-export enum OfficeType {
-  office = 'GABINET',
-  register = 'REJESTRACJA',
 }
 
 @Component({
@@ -208,7 +204,7 @@ export class OfficeComponent implements OnInit {
   templateUrl: './office-dialog.component.html',
 })
 export class OfficeDialogComponent {
-  officeTypeEnum = OfficeType;
+  officeTypeEnum = OfficeTypeEnum;
   constructor(
     public dialogRef: MatDialogRef<OfficeDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData

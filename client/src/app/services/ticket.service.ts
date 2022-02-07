@@ -23,19 +23,12 @@ export class TicketService {
     return this.http.post<any>(this._ip + '/newest-tickets-for-center', center);
   }
 
-  getConfirmedTicketsForCenter(data: any): Observable<any> {
-    return this.http.post<any>(
-      this._ip + '/confirmed-tickets-for-center',
-      data
-    );
+  getPrintedTicketsForCenter(data: any): Observable<any> {
+    return this.http.post<any>(this._ip + '/printed-tickets-for-center', data);
   }
 
   getCalledTicketForOffice(office: any) {
     return this.http.post<any>(this._ip + '/called-ticket-for-office', office);
-  }
-
-  confirmTicket(ticket: any) {
-    return this.http.post<any>(this._ip + '/confirm-ticket', ticket);
   }
 
   deleteTicket(ticket: any) {

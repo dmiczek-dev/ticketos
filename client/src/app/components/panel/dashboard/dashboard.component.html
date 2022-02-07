@@ -8,16 +8,6 @@
     </div>
   </mat-list-item>
   <mat-divider></mat-divider>
-  <div mat-subheader>Panele sterujące dla rejestracji</div>
-  <ng-container *ngFor="let office of offices">
-    <mat-list-item *ngIf="office.type === 'REJESTRACJA'">
-      <mat-icon routerLink="../widok/panel-rejestracja/{{ office.officeId }}" mat-list-icon>queue_play_next</mat-icon>
-      <div mat-line>{{ office.name }}</div>
-      <div mat-line>
-        URL: {{ href }}/widok/panel-rejestracja/{{ office.officeId }}
-      </div>
-    </mat-list-item>
-  </ng-container>
   <mat-divider></mat-divider>
   <div mat-subheader>Panele sterujące dla gabinetów</div>
   <ng-container *ngFor="let office of offices">

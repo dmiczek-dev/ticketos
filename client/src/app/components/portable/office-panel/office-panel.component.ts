@@ -40,8 +40,8 @@ export class OfficePanelComponent implements OnInit, OnDestroy {
   }
 
   ngAfterViewInit(): void {
-    this.socket.on('reloadConfirmedTickets', () => {
-      this.getConfirmedTicketsForCenter();
+    this.socket.on('reloadNewestTickets', () => {
+      this.getNewestTicketsForCenter();
     });
 
     this.socket.on('reloadCalledTickets', () => {
@@ -66,15 +66,15 @@ export class OfficePanelComponent implements OnInit, OnDestroy {
           console.log(error);
         },
         () => {
-          this.getConfirmedTicketsForCenter();
+          this.getNewestTicketsForCenter();
           this.getCalledTicketForOffice();
         }
       );
   }
 
-  getConfirmedTicketsForCenter() {
+  getNewestTicketsForCenter() {
     this._ticketSrv
-      .getConfirmedTicketsForCenter({
+      .getNewestTicketsForCenter({
         centerId: this.office.centerId,
         officeId: this.office.officeId,
       })
@@ -87,8 +87,6 @@ export class OfficePanelComponent implements OnInit, OnDestroy {
     this._ticketSrv
       .getCalledTicketForOffice({ officeId: this.office.officeId })
       .subscribe((res) => {
-        console.log(res);
-
         this.activeTicket = res[0];
       });
   }
@@ -116,7 +114,7 @@ export class OfficePanelComponent implements OnInit, OnDestroy {
               .subscribe(
                 () => {},
                 (error) => console.log(error),
-                () => this.getConfirmedTicketsForCenter()
+                () => this.getNewestTicketsForCenter()
               );
           }
         );
@@ -149,7 +147,7 @@ export class OfficePanelComponent implements OnInit, OnDestroy {
               .subscribe(
                 () => {},
                 (error) => console.log(error),
-                () => this.getConfirmedTicketsForCenter()
+                () => this.getNewestTicketsForCenter()
               );
           }
         );

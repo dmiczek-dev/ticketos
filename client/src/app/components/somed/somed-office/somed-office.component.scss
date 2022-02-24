@@ -1,0 +1,136 @@
+@font-face {
+  font-family: contm;
+  src: url(../../../../assets/fonts/contm.eot),
+    url(../../../../assets/fonts/contm.eot#iefix) format("embedded-opentype"),
+    url(../../../../assets/fonts/contm.ttf) format("truetype"),
+    url(../../../../assets/fonts/contm.woff) format("woff"),
+    url(../../../../assets/fonts/contm.svg#contm) format("svg");
+  font-weight: 400;
+  font-style: normal;
+}
+
+.container {
+  padding: 50px;
+}
+
+.digits {
+  font-family: contm;
+}
+
+.mat-toolbar {
+  background-color: var(--primary-color);
+  color: #ffffff;
+}
+
+.mat-toolbar-row {
+  min-height: 100px !important;
+}
+
+.timer {
+  font-size: 48px;
+  font-weight: 700;
+}
+
+.toolbar-text {
+  font-size: 48px;
+  font-weight: 700;
+  color: white;
+}
+
+ngx-marquee {
+  width: 100%;
+  font-size: 2rem;
+  .marquee-text {
+    margin-right: 100px;
+    color: white;
+    background-color: unset;
+  }
+}
+
+.footer {
+  position: absolute;
+  bottom: 0%;
+}
+
+.current-ticket {
+  background-color: #00a19d;
+  border-radius: 0.2rem;
+  width: auto;
+  font-size: 48px;
+  font-weight: 700;
+}
+
+.next-ticket {
+  background-color: #ffb344;
+  border-radius: 0.2rem;
+  width: auto;
+  font-size: 48px;
+  font-weight: 700;
+}
+
+.ticket-header {
+  font-size: 2.4rem;
+  color: #ffffff;
+  text-align: center;
+  min-height: 100px;
+  line-height: 100px;
+}
+
+.ticket-content {
+  font-size: 9rem;
+  text-align: center;
+  color: #ffffff;
+  min-height: 160px;
+  line-height: 160px;
+}
+
+.custom-table {
+  width: 100%;
+  display: table;
+}
+
+.custom-table-caption {
+  display: table-caption;
+  color: #ffffff;
+  background-color: #7c99ac;
+  font-size: 2rem;
+  text-align: center;
+  font-weight: bold;
+  min-height: 50px;
+  line-height: 50px;
+  border-top-left-radius: 0.2rem;
+  border-top-right-radius: 0.2rem;
+}
+
+.table-body {
+  display: table-row-group;
+}
+
+.table-row {
+  display: table-row;
+}
+
+.table-cell {
+  display: table-cell;
+  padding: 10px;
+  font-size: 20px;
+  border-bottom: 2px solid #3e9694;
+}
+
+.table-cell-active {
+  display: table-cell;
+  padding: 10px;
+  font-size: 20px;
+  border-bottom: 2px solid #3e9694;
+  color: white;
+  background-color: rgb(42, 182, 123);
+}
+
+.hour {
+  font-size: 20px !important;
+  white-space: nowrap;
+  text-align: end;
+}
+
+
+

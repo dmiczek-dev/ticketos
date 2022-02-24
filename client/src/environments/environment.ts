@@ -4,11 +4,11 @@
 
 export const environment = {
   production: false,
-  socket_address: 'http://192.168.50.104:3000',
-  api_address: 'http://192.168.50.104:3000/api',
-  somed_socket_address: 'http://192.168.3.243:3100',
-  somed_api_address: 'http://192.168.3.243:3100/api',
+  socket_address: 'http://192.168.11.65:4200',
+  api_address: 'http://192.168.11.65:4200/api',
+  oracle_api_address: 'http://192.168.11.65:3000/api/v1',
   googleApiKey: 'AIzaSyBvafpEHqBfqXekyhvYKQTA3bIHr2Q24gI',
+  oracleSocketAddress:  'http://192.168.11.65:3000'
 };
 
 /*

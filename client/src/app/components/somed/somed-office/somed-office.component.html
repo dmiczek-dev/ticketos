@@ -1,0 +1,71 @@
+<!--Header-->
+<mat-toolbar>
+  <mat-toolbar-row fxLayoutAlign="space-between center">
+    <div>
+      <span class="toolbar-text"> {{ "Gabinet " }} </span>
+    </div>
+
+    <div>
+      <span class="timer digits">{{ today | date: "H:mm:ss" }}</span>
+    </div>
+  </mat-toolbar-row>
+</mat-toolbar>
+
+<div class="container" fxLayout="row" fxLayoutGap="40px">
+  <!--Tickets-->
+  <div fxFlex="20">
+    <div fxLayout="column" fxLayoutGap="40px">
+      <div class="current-ticket">
+        <div class="ticket-header">BIEŻĄCY</div>
+        <div class="ticket-content">
+          <p>25</p>
+        </div>
+      </div>
+
+      <div class="next-ticket">
+        <div class="ticket-header">NASTĘPNY</div>
+        <div class="ticket-content">
+          <p>64</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--Schedule-->
+  <div fxFlex="80">
+    <div fxLayout="row wrap" fxLayoutGap="40px grid">
+
+      <div fxFlex="33" *ngFor="let day of weekDays; let i = index">
+        <div class="custom-table">
+          <div class="custom-table-caption">{{ day.day }}</div>
+          <div class="table-body">
+            <ng-container *ngFor="let hour of schedule">
+              <div class="table-row" *ngIf="hour.day === day.day">
+                <div class="table-cell"
+                [ngClass]="{'table-cell-active': today! >= hour.start && today! <= hour.end}">
+                  <div>{{ hour.doctor }}</div>
+                  <small>{{ hour.clinic }}</small>
+                </div>
+                <div class="table-cell hour"
+                [ngClass]="{'table-cell-active': today! >= hour.start && today! <= hour.end}">
+                  {{ (hour.start | date: "H:mm") + ' - ' + (hour.end | date: "H:mm")}}
+                </div>
+              </div>
+            </ng-container>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!--Footer-->
+<mat-toolbar class="footer">
+  <mat-toolbar-row>
+      <ngx-marquee
+      fxFlex fxLayoutAlign="center center"
+      duration="10s">
+      <mark class="marquee-text" *ngFor="let text of marqueeList">{{text}}</mark>
+      </ngx-marquee>
+  </mat-toolbar-row>
+</mat-toolbar>

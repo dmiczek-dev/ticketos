@@ -9,6 +9,7 @@ import { AuthGuard } from './auth.guard';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { TokenService } from './services/token.service';
 import { PortableModule } from './modules/portable.module';
+import { SomedModule } from './modules/somed.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -18,6 +19,7 @@ import { PortableModule } from './modules/portable.module';
     PanelModule,
     PortableModule,
     BrowserAnimationsModule,
+    SomedModule
   ],
   providers: [
     AuthGuard,

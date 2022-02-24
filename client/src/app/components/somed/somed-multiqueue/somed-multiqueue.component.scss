@@ -1,0 +1,80 @@
+@font-face {
+  font-family: contm;
+  src: url(../../../../assets/fonts/contm.eot),
+    url(../../../../assets/fonts/contm.eot#iefix) format("embedded-opentype"),
+    url(../../../../assets/fonts/contm.ttf) format("truetype"),
+    url(../../../../assets/fonts/contm.woff) format("woff"),
+    url(../../../../assets/fonts/contm.svg#contm) format("svg");
+  font-weight: 400;
+  font-style: normal;
+}
+
+// .container {
+//   padding: 50px;;
+// }
+
+.digits {
+  font-family: contm;
+}
+
+.mat-toolbar {
+  background-color: var(--primary-color);
+  color: #ffffff;
+}
+
+.timer {
+  font-size: 60px;
+  font-weight: 700;
+}
+
+.toolbar-text {
+  font-size: 48px;
+  font-weight: 700;
+  color: white;
+}
+
+ngx-marquee {
+  width: 100%;
+  font-size: 2rem;
+  .marquee-text {
+    margin-right: 100px;
+    color: white;
+    background-color: unset;
+  }
+}
+
+
+.table-header {
+  background-color: #065b66;
+  color: #ffffff;
+  font-weight: bold;
+  font-size: 2rem;
+}
+
+.text-medium {
+  font-size: 45px;
+  line-height: 45px;
+  font-family: contm;
+}
+
+.text-large {
+  font-size: 80px;
+  line-height: 80px;
+  text-align: center;
+  font-family: contm;
+}
+
+.table-cell {
+  border-right: 2px dashed #065b66;
+  border-bottom: 2px dashed #065b66;
+}
+
+.table-cell-last {
+  border-bottom: 2px dashed #065b66;
+  font-family: contm;
+}
+
+.text-active {
+  color: rgb(75, 143, 6)
+}
+

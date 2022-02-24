@@ -1,0 +1,42 @@
+<div fxLayout="column" fxFill>
+  <!-- header -->
+  <mat-toolbar fxLayout="column" fxFlex="9">
+    <mat-toolbar-row fxFill fxLayoutAlign="center center">
+        <span class="timer digits">{{ today | date: "H:mm:ss" }}</span>
+    </mat-toolbar-row>
+  </mat-toolbar>
+  <!-- sub-header -->
+  <div class="table-header" fxFlex="8" fxLayout="row" fxLayoutAlign="space-around center">
+    <div class="header-cell" fxFill fxFlex="55" fxLayoutAlign="center center">Lekarz medycyny</div>
+    <div class="header-cell" fxFill fxFlex="15" fxLayoutAlign="center center">Gabinet</div>
+    <div class="header-cell" fxFill fxFlex="15" fxLayoutAlign="center center">Bieżący</div>
+    <div class="header-cell" fxFill fxFlex="15" fxLayoutAlign="center center">Oczekujący</div>
+  </div>
+  <!-- body -->
+  <div fxLayout="column" fxFlex>
+    <!-- content body -->
+    <ng-container *ngFor="let ticket of somedQueue; let i = index">
+    <div fxLayout="row" fxLayoutAlign="space-around" fxFlex="{{ 100 / somedQueue.length }}">
+        <div [ngClass]="somedQueue.length > 3 ? 'text-medium' : 'text-large'" class="table-cell" fxFlex="55" fxLayoutAlign="center center">{{ticket.doctor}}</div>
+        <div [ngClass]="somedQueue.length > 3 ? 'text-medium' : 'text-large'" class="table-cell" fxFlex="15" fxLayoutAlign="center center">{{ticket.office}}</div>
+        <div [ngClass]="somedQueue.length > 3 ? 'text-medium' : 'text-large'" class="table-cell text-active" fxFlex="15" fxLayoutAlign="center center">{{ticket.current}}</div>
+        <div [ngClass]="somedQueue.length > 3 ? 'text-medium' : 'text-large'" class="table-cell-last" fxFlex="15" fxLayoutAlign="center center">{{ticket.next}}</div>
+    </div>
+  </ng-container>
+    <!-- <div fxLayout="row" fxFlex="{{100/ticketList.length}}" fxLayoutAlign="space-around">
+      <div>1</div>
+      <div>2</div>
+      <div>3</div>
+      <div>4</div>
+    </div> -->
+  </div>
+  <!-- footer -->
+  <mat-toolbar fxFlex="9" class="footer" fxLayoutAlign="center center">
+    <mat-toolbar-row>
+        <ngx-marquee
+        duration="10s">
+        <mark class="marquee-text" *ngFor="let text of marqueeList">{{text}}</mark>
+        </ngx-marquee>
+    </mat-toolbar-row>
+  </mat-toolbar>
+</div>

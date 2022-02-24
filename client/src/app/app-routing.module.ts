@@ -15,6 +15,8 @@ import { TicketTypeComponent } from './components/panel/ticket-type/ticket-type.
 import { OfficePanelComponent } from './components/portable/office-panel/office-panel.component';
 import { OfficeViewComponent } from './components/portable/office-view/office-view.component';
 import { TicketComponent } from './components/portable/ticket/ticket.component';
+import { SomedMultiqueueComponent } from './components/somed/somed-multiqueue/somed-multiqueue.component';
+import { SomedOfficeComponent } from './components/somed/somed-office/somed-office.component';
 import { KioskComponent } from './layouts/kiosk/kiosk.component';
 import { PanelComponent } from './layouts/panel/panel.component';
 
@@ -72,6 +74,13 @@ const routes: Routes = [
     children: [
       { path: 'panel-gabinet/:officeId', component: OfficePanelComponent },
       { path: 'gabinet/:officeId', component: OfficeViewComponent },
+    ],
+  },
+  {
+    path: 'somed',
+    children: [
+      { path: 'wokanda/:centerId/:office', component: SomedOfficeComponent },
+      { path: 'multikolejka/:centerId/:room', component: SomedMultiqueueComponent }
     ],
   },
 ];

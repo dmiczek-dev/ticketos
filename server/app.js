@@ -3,11 +3,11 @@ const express = require("express");
 const app = express();
 const http = require("http");
 const server = http.createServer(app);
-const { Server, Socket } = require("socket.io");
+const { Server } = require("socket.io");
 //Database and config
 const dotenv = require("dotenv");
 const logger = require("morgan");
-const { pgConnect } = require("./src/db/postgres");
+const { pgConnect, disconnectClient } = require("./src/db/postgres");
 const cors = require("cors");
 const { resetTicketSequence } = require("./src/jobs/scheduler");
 const path = require("path");
@@ -47,7 +47,7 @@ resetTicketSequence();
 
 app.use(logger("dev"));
 app.use(express.json());
-app.use(cors(corsOptions));
+app.use(cors());
 
 app.use("/api", authRoutes);
 app.use("/api", centerRoutes);
@@ -75,4 +75,10 @@ process.on("uncaughtException", (error) => {
 process.on("unhandledRejection", (error, promise) => {
   console.log(" Handle a promise rejection: ", promise);
   console.log(" The error was: ", error);
+});
+
+process.on("SIGINT", function () {
+  console.log("Closing postgres database connection");
+  disconnectClient();
+  process.exit();
 });

@@ -13,6 +13,7 @@ exports.pgConnect = () => {
   // Handle disconnect
   client.on("error", () => {
     console.log("Disconnect from postgres");
+    client.end();
   });
 
   client.connect((err) => {
@@ -22,6 +23,10 @@ exports.pgConnect = () => {
       console.log("Connected to PostgresDB");
     }
   });
+};
+
+exports.disconnectClient = () => {
+  client.end();
 };
 
 exports.getClient = () => {

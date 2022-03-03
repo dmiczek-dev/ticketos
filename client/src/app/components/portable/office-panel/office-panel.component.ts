@@ -7,7 +7,7 @@ import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-office-panel',
-  templateUrl: './office-panel.component.html',
+  templateUrl: './test.html',
   styleUrls: ['./office-panel.component.scss'],
 })
 export class OfficePanelComponent implements OnInit, OnDestroy {

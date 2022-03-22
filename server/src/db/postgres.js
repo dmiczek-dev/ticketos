@@ -25,7 +25,7 @@ exports.pgConnect = () => {
   });
 };
 
-exports.disconnectClient = () => {
+exports.pgDisconnect = () => {
   client.end();
 };
 

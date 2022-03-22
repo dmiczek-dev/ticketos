@@ -7,7 +7,7 @@ const { Server } = require("socket.io");
 //Database and config
 const dotenv = require("dotenv");
 const logger = require("morgan");
-const { pgConnect, disconnectClient } = require("./src/db/postgres");
+const { pgConnect, pgDisconnect } = require("./src/db/postgres");
 const cors = require("cors");
 const { resetTicketSequence } = require("./src/jobs/scheduler");
 const path = require("path");
@@ -22,12 +22,6 @@ const labRoutes = require("./src/routes/lab");
 const printerSettingRoutes = require("./src/routes/printer-setting");
 const ticketRoutes = require("./src/routes/ticket");
 dotenv.config();
-
-const corsOptions = {
-  origin: process.env.CORS_ORIGIN,
-  optionSuccessStatus: 200, //Some legacy browers choke on 204
-  credentials: true,
-};
 
 // Socket.io init
 global.io = new Server(server, {
@@ -78,7 +72,7 @@ process.on("unhandledRejection", (error, promise) => {
 });
 
 process.on("SIGINT", function () {
-  console.log("Closing postgres database connection");
-  disconnectClient();
+  console.log("Closing postgres connection");
+  pgDisconnect();
   process.exit();
 });
